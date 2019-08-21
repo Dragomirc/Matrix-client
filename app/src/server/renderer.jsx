@@ -9,7 +9,7 @@ import routes from "../routes/client";
 
 export default (req, store, context) => {
     const content = renderToString(
-        <Provider store={store}>
+      <Provider store={store}>
             <StaticRouter location={req.path} context={context}>
                 {renderRoutes(routes)}
             </StaticRouter>
