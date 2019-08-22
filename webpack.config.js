@@ -31,6 +31,18 @@ module.exports = () => {
             {
                 test: /\.jsx?$/,
                 loader: "babel-loader"
+            },
+            {
+              test: /\.(png|jpe?g|gif|svg)$/i,
+              use: [
+                {
+                  loader: 'file-loader',
+                  options: {
+                    name: '[name][hash].[ext]',
+                    outputPath: 'images',
+                  }
+                },
+              ],
             }, {
               test: /\.s[ac]ss$/i,
               use: [
@@ -79,7 +91,19 @@ module.exports = () => {
             {
                 test: /\.jsx?$/,
                 loader: "babel-loader"
-            },  {
+            }, 
+            {
+              test: /\.(png|jpe?g|gif|svg)$/i,
+              use: [
+                {
+                  loader: 'file-loader',
+                  options: {
+                    name: '[name][hash].[ext]',
+                    outputPath: 'images',
+                  }
+                },
+              ],
+            }, {
               test: /\.s[ac]ss$/i,
               use: [
                 {
@@ -104,6 +128,7 @@ module.exports = () => {
                 },
               ],
             },
+            
         ]
   };
 
