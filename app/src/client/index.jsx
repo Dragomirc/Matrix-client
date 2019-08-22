@@ -6,8 +6,8 @@ import thunk from "redux-thunk";
 import { Provider } from "react-redux";
 import { renderRoutes } from "react-router-config";
 import axios from "axios";
-import reducers from "../redux/reducers";
-import routes from "../routes/client";
+import reducers from "app/redux/reducers";
+import routes from "app/routes/client";
 
 const axiosInstance = axios.create({});
 const store = createStore(

@@ -1,15 +1,20 @@
 const path = require("path");
-
+const glob = require('glob');
 const APP_FOLDER = path.resolve(__dirname, "./app");
 const nodeExternals = require("webpack-node-externals");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 
 module.exports = () => {
   const alias = {};
+  const files = glob.sync(`${APP_FOLDER}/src/*`);
+  for(let x = 0; x < files.length; x++){
+     const temp = files[x].split('/');
+     alias[`app/${temp[temp.length - 1]}`] = files[x]
+  }
     const resolve = {
         alias,
         extensions: [".js", ".jsx", ".json"],
-    mainFiles: ["index.js", "index.jsx"]
+        mainFiles: ["index.js", "index.jsx"]
   };
     const loaders = {
         client: [

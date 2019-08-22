@@ -1,7 +1,7 @@
 /* eslint-disable  import/no-named-as-default */
 /* eslint-disable import/no-named-as-default-member */
-import App from '../components/app';
-import HomePage from '../containers/home-page';
+import App from 'app/components/app';
+import HomePage from 'app/containers/home-page';
 
 const routes = [
     {

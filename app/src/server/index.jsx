@@ -8,8 +8,8 @@ import { Provider } from "react-redux";
 import { renderRoutes } from "react-router-config";
 import serialize from "serialize-javascript";
 import { Helmet } from "react-helmet";
-import createStore from "../utils/create-store";
-import routes from "../routes/client";
+import createStore from "app/utils/create-store";
+import routes from "app/routes/client";
 
 const app = express();
 app.use(express.static(path.resolve("app/compiled")));
