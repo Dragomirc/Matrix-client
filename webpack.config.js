@@ -2,6 +2,7 @@ const path = require("path");
 
 const APP_FOLDER = path.resolve(__dirname, "./app");
 const nodeExternals = require("webpack-node-externals");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 
 module.exports = () => {
   const alias = {};
@@ -30,7 +31,34 @@ module.exports = () => {
             {
                 test: /\.jsx?$/,
                 loader: "babel-loader"
-            }
+            }, {
+              test: /\.s[ac]ss$/i,
+              use: [
+                {
+                  loader: MiniCssExtractPlugin.loader,
+                  options: {
+                      publicPath: '../'
+                  }
+              },
+              {  loader: 'css-loader',
+              options: {
+                modules: {
+ 
+                  localIdentName: '[name]__[local]--[hash:base64:5]',
+                },
+              }},
+           
+           
+                {
+                  loader: 'sass-loader',
+                  options: {
+                    implementation: require('sass')
+                  },
+                },
+              ],
+            },
+   
+  
     ],
         server: [
       {
@@ -51,7 +79,31 @@ module.exports = () => {
             {
                 test: /\.jsx?$/,
                 loader: "babel-loader"
-            }
+            },  {
+              test: /\.s[ac]ss$/i,
+              use: [
+                {
+                  loader: MiniCssExtractPlugin.loader,
+                  options: {
+                      publicPath: '../'
+                  }
+              },
+              {  loader: 'css-loader',
+              options: {
+                modules: {
+              
+                  localIdentName: '[name]__[local]--[hash:base64:5]',
+                },
+              }},
+           
+                {
+                  loader: 'sass-loader',
+                  options: {
+                    implementation: require('sass')
+                  },
+                },
+              ],
+            },
         ]
   };
 
@@ -67,26 +119,36 @@ module.exports = () => {
                 publicPath: "/scripts/",
                 path: `${APP_FOLDER}/compiled/scripts`
             },
-      module: {
-                rules: loaders.client
-      },
-            resolve
+            module: {
+                      rules: loaders.client
+            },
+            resolve,    
+            plugins: [
+              new MiniCssExtractPlugin({
+                filename: '../styles/[name].css'
+              })
+            ]
         },
         {
             name: "server",
             target: "node",
-      entry: {
+            entry: {
                 server: ["@babel/polyfill", `${APP_FOLDER}/src/server/index.jsx`]
             },
             output: {
                 filename: "[name].js",
                 path: `${APP_FOLDER}/compiled`
-      },
+            },
             module: {
                 rules: loaders.server
             },
             resolve,
-            externals: [nodeExternals()]
+            externals: [nodeExternals()],
+            plugins: [
+              new MiniCssExtractPlugin({
+                filename: '[name].css'
+              })
+            ]
         }
   ];
 

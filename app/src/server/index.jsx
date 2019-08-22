@@ -1,4 +1,5 @@
 import express from "express";
+import path from 'path'
 import { matchRoutes } from "react-router-config";
 import React from "react";
 import { renderToString } from "react-dom/server";
@@ -11,8 +12,7 @@ import createStore from "../utils/create-store";
 import routes from "../routes/client";
 
 const app = express();
-
-app.use(express.static("dist"));
+app.use(express.static(path.resolve("app/compiled")));
 app.get("*", (req, res) => {
     const store = createStore(req);
     const promises = matchRoutes(routes, req.path)
@@ -37,17 +37,19 @@ app.get("*", (req, res) => {
 
     const helmet = Helmet.renderStatic();
     const html =  `
+            <!DOCTYPE html>
             <html>
             <head>
             ${helmet.title.toString()}
             ${helmet.meta.toString()}
+            <link rel="stylesheet"  type="text/css" href="/styles/client.css">
             </head>
             <body>
               <div id="root">${content}</div>
               <script>
                   window.INITIAL_STATE = ${serialize(store.getState())}
               </script>
-              <script src="client.js"></script>
+              <script type="text/javascript" src="/scripts/client.js"></script>
             </body>
           </html>
   `;
