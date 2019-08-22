@@ -4,15 +4,15 @@ import App from '../components/app';
 import HomePage from '../containers/home-page';
 
 const routes = [
-  {
-    component: App,
-    routes: [
-      {
-        component: HomePage,
-        path: '/',
-      },
-    ],
-  },
+    {
+        component: App,
+        routes: [
+            {
+                component: HomePage,
+                path: '/'
+            }
+        ]
+    }
 ];
 
 export default routes;
