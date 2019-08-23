@@ -142,7 +142,7 @@ module.exports = () => {
             name: "client",
             target: "web",
             entry: {
-                client: ["@babel/polyfill", `${APP_FOLDER}/src/client/index.jsx`]
+                client: ["@babel/polyfill", `${APP_FOLDER}/src/client.jsx`]
             },
             output: {
                 filename: "[name].js",
@@ -156,14 +156,37 @@ module.exports = () => {
             plugins: [
               new MiniCssExtractPlugin({
                 filename: '../styles/[name].css'
-              })
-            ]
+              }),
+          
+            ],   optimization: {
+              splitChunks: {
+                  chunks: 'initial',
+                  maxInitialRequests: Infinity,
+                  minSize: 0,
+                  cacheGroups: {
+                      vendor: {
+                          test: m => /node_modules/.test(m.context),
+                          name: 'vendor',
+                          filename: 'vendor.js',
+                          priority: 10
+                      },
+                      polyfill: {
+                          test: m =>
+                              /node_modules/.test(m.context) &&
+                              /polyfill/.test(m.context),
+                          name: 'polyfill',
+                          filename: 'polyfill.js',
+                          priority: 20
+                      }
+                  }
+              }
+          },
         },
         {
             name: "server",
             target: "node",
             entry: {
-                server: ["@babel/polyfill", `${APP_FOLDER}/src/server/index.jsx`]
+                server: ["@babel/polyfill", `${APP_FOLDER}/src/server.jsx`]
             },
             output: {
                 filename: "[name].js",
