@@ -8,14 +8,15 @@ import fs from 'fs';
 import md5file from 'md5-file';
 import { matchRoutes, renderRoutes } from 'react-router-config';
 import React from 'react';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-
 import serialize from 'serialize-javascript';
 import { Helmet } from 'react-helmet';
-import createStore from 'app/utils/create-store';
 import routes from 'app/routes/client';
+import reducers from 'app/redux/reducers';
 
 const app = express();
 app.engine('.hbs', handlebars({
@@ -47,7 +48,11 @@ app.use((req, res, next) => {
 
 app.use(express.static(path.resolve('app/compiled')));
 app.get('*', (req, res) => {
-    const store = createStore(req);
+    const store = createStore(
+        reducers,
+        {},
+        applyMiddleware(thunk)
+    );
     const promises = matchRoutes(routes, req.path)
         .map(({ route }) => (route.fetchData ? route.fetchData(store) : null))
         .map((promise) => {
@@ -57,6 +62,7 @@ app.get('*', (req, res) => {
                 });
             }
         });
+
     Promise.all(promises).then(() => {
         const context = {};
         const content = renderToString(
@@ -67,7 +73,7 @@ app.get('*', (req, res) => {
             </Provider>
         );
 
-           if (context.url) {
+        if (context.url) {
             return res.redirect(301, context.url);
         }
         if (context.notFound) {
@@ -101,7 +107,7 @@ app.get('*', (req, res) => {
             )
                 ? `/scripts/polyfill.${md5file.sync('./app/compiled/scripts/polyfill.js')}.js`
                 : null,
-            store: serialize(store.getState())
+            state: serialize(store.getState())
         };
         res.render('index', params);
     });
