@@ -12,7 +12,9 @@
         "server": "node ./app/compiled/server.js",
         "server:watch": "node ./node_modules/nodemon/bin/nodemon.js app/compiled/server.js",
         "start": "node ./node_modules/npm-run-all/bin/npm-run-all/index.js -c --serial build server",
-        "start:watch": "node ./node_modules/npm-run-all/bin/npm-run-all/index.js -c --parallel build:watch server:watch"
+        "start:watch": "node ./node_modules/npm-run-all/bin/npm-run-all/index.js -c --parallel  sass:watch build:watch server:watch",
+        "sass": "node ./scripts/sass.js",
+        "sass:watch": "node ./scripts/sass-watch.js"
     },
     "author": "",
     "license": "ISC",
@@ -62,6 +64,7 @@
         "prettier": "^1.18.2",
         "sass": "^1.22.10",
         "sass-loader": "^7.3.1",
+        "tasksfile": "^5.1.0",
         "webpack": "^4.39.2",
         "webpack-cli": "^3.3.7",
         "webpack-node-externals": "^1.7.2"

@@ -1,0 +1,20 @@
+@import '../~bootstrap/scss/mixins/breakpoints';
+
+$core-xs-min: breakpoint-min(xs);
+$core-sm-min: breakpoint-min(sm);
+$core-md-min: breakpoint-min(md);
+$core-lg-min: breakpoint-min(lg);
+$core-xl-min: breakpoint-min(xl);
+
+$core-xs-max: breakpoint-max(xs);
+$core-sm-max: breakpoint-max(sm);
+$core-md-max: breakpoint-max(md);
+$core-lg-max: breakpoint-max(lg);
+
+$core-phone: 'only screen and (min-width: #{$core-xs-min})';
+$core-phone-strict: 'only screen and (min-width: #{$core-xs-min}) and (max-width: #{$core-xs-max})';
+$core-tablet: 'only screen and (min-width: #{$core-sm-min})';
+$core-tablet-strict: 'only screen and (min-width: #{$core-sm-min}) and (max-width: #{$core-md-max})';
+$core-desktop: 'only screen and (min-width: #{$core-lg-min})';
+$core-desktop-strict: 'only screen and (min-width: #{$core-lg-min}) and (max-width: #{$core-lg-max})';
+$core-extra-large: 'only screen and (min-width: #{$core-xl-min})';
