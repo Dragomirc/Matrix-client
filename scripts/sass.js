@@ -12,7 +12,7 @@ if ( fs.existsSync(APP_FOLDER + '/src/styles/style.scss') ) {
         fs.mkdirSync(APP_FOLDER + '/compiled/styles');
     }
     
-    sh('node ./node_modules/sass/sass.js app/src/styles/style.scss app/compiled/styles/vendor.css');
+    sh('node ./node_modules/sass/sass.js app/src/styles/scss/style.scss app/compiled/styles/vendor.css');
 } else {
     console.log('No sass file found');
 }
