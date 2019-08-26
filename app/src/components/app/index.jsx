@@ -1,8 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { renderRoutes } from 'react-router-config';
+import Header from 'app/components/header';
 
-const App = ({ route }) => <div>{renderRoutes(route.routes)}</div>;
+const App = ({ route }) => (
+    <>
+        <Header />
+        {renderRoutes(route.routes)}
+    </>
+);
 
 App.propTypes = {
     route: PropTypes.object.isRequired

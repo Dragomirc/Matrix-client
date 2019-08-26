@@ -10,7 +10,7 @@
 // Dependencies
 // ==========================================================================
 
-@import '~bootstrap/scss/type';
+@import '../../../../node_modules/bootstrap/scss/type';
 
 // ==========================================================================
 // Variables
@@ -32,14 +32,14 @@ h6,
 .h4,
 .h5,
 .h6 {
-    margin-bottom: $headings-margin-bottom;
-    font-family: $recruiter-headings-font-family;
-    font-weight: $headings-font-weight;
-    line-height: $headings-line-height;
-    color: $headings-color;
+  margin-bottom: $headings-margin-bottom;
+  font-family: $recruiter-headings-font-family;
+  font-weight: $headings-font-weight;
+  line-height: $headings-line-height;
+  color: $headings-color;
 }
 
 h1,
 .h1 {
-    font-size: $h1-font-size;
+  font-size: $h1-font-size;
 }

@@ -8,7 +8,7 @@
 // Dependencies
 // ==========================================================================
 
-@import '~bootstrap/scss/reboot';
+@import '../../../../node_modules/bootstrap/scss/reboot';
 @import 'variables/font';
 
 // ==========================================================================
@@ -22,7 +22,7 @@
 /* stylelint-disable selector-max-type  */
 
 body {
-    font-family: $recruiter-font-family-base;
+  font-family: $recruiter-font-family-base;
 }
 
 /* stylelint-enable */

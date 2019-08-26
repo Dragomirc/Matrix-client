@@ -8,7 +8,7 @@
 // Dependencies
 // ==========================================================================
 
-@import '~bootstrap/scss/mixins';
+@import '../../../../node_modules/bootstrap/scss/mixins';
 
 // ==========================================================================
 // Variables
@@ -20,5 +20,5 @@
 
 // Shadows
 @mixin boxShadow {
-    box-shadow: 2px 2px 16px 0 $recruiter-box-shadow;
+  box-shadow: 2px 2px 16px 0 $recruiter-box-shadow;
 }
