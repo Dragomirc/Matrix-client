@@ -14,7 +14,7 @@ class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOpen: true
+      isOpen: false
     };
   }
 
@@ -27,26 +27,20 @@ class Header extends Component {
   render() {
     const { isOpen } = this.state;
     return (
-      <Navbar color="primary" expand="md">
+      <Navbar color="light" light expand="md">
         <NavbarBrand href="/" className={styles.navLink}>Logo</NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
-        <Collapse isOpen={isOpen}>
-          <Nav>
+        <Collapse isOpen={isOpen} navbar>
+          <Nav navbar className="ml-auto">
             <NavItem >
               <NavLink href="/products" className={styles.navLink}>Products</NavLink>
             </NavItem>
-          </Nav>
-          <Nav>
             <NavItem >
               <NavLink href="/add-product" className={styles.navLink}>Add Product</NavLink>
             </NavItem>
-          </Nav>
-          <Nav>
             <NavItem >
               <NavLink href="/login" className={styles.navLink}>Login</NavLink>
-            </NavItem>
-          </Nav>
-          <Nav>
+            </NavItem>      
             <NavItem >
               <NavLink href="/signup" className={styles.navLink}>Signup</NavLink>
             </NavItem>
