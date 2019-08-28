@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { Component } from 'react';
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import classnames from 'classnames';
@@ -10,12 +11,17 @@ class AddProduct extends Component {
     this.state = {
       title: '',
       description: '',
-      price: ''
+      price: '',
+      image: ''
     };
   }
 
-  onInputChange = ({ target: { value, name } }) => {
-    this.setState({ [name]: value });
+  onInputChange = ({ target: { value, name, files } }) => {
+    if (files) {
+      this.setState({ [name]: files[0] });
+    } else {
+      this.setState({ [name]: value });
+    }
   };
 
   onSubmit = event => {
@@ -25,6 +31,7 @@ class AddProduct extends Component {
 
   render() {
     const { title, description, price } = this.state;
+
     return (
       <Form
         className={classnames(styles.form, 'mx-auto mt-3')}
@@ -36,15 +43,16 @@ class AddProduct extends Component {
             id="title"
             name="title"
             type="text"
+            autoComplete="off"
             value={title}
             onChange={this.onInputChange}
           />
         </FormGroup>
         <FormGroup>
-          <Label for="picture">Picture</Label>
+          <Label for="image">Image</Label>
           <Input
-            name="picture"
-            id="picture"
+            name="image"
+            id="image"
             type="file"
             onChange={this.onInputChange}
           />
@@ -65,6 +73,7 @@ class AddProduct extends Component {
             id="price"
             name="price"
             type="number"
+            step="0.01"
             value={price}
             onChange={this.onInputChange}
           />

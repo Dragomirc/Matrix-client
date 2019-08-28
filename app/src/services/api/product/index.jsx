@@ -5,12 +5,15 @@ export default class ProductService {
   static createProduct(product) {
     return Config.fetch().then(config => {
       const url = `${config.services.admin}/product`;
+      const { title, description, price, image } = product;
+      const formData = new FormData();
+      formData.append('title', title);
+      formData.append('price', price);
+      formData.append('description', description);
+      formData.append('image', image);
       const options = {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(product)
+        body: formData
       };
       return fetch(url, options).then(async response => {
         const statusCode = response.status;
@@ -18,6 +21,8 @@ export default class ProductService {
         switch (statusCode) {
           case 201:
             return res;
+          case 422:
+            throw new Error(res);
           case 500:
             throw new Error(res.message);
           default:
@@ -29,7 +34,7 @@ export default class ProductService {
 
   static getProducts() {
     return Config.fetch().then(config => {
-      const url = `${config.services.admin}/products`;
+      const url = `${config.services.shop}/products`;
       const options = {
         method: 'GET'
       };
