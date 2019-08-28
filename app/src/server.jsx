@@ -1,5 +1,4 @@
 /* eslint-disable */
-
 import express from 'express';
 import handlebars from 'express-handlebars';
 import path from 'path';
@@ -108,4 +107,4 @@ app.get('*', (req, res) => {
     res.render('index', params);
   });
 });
-app.listen(process.env.PORT || 8080);
+app.listen(process.env.PORT || 3000);
