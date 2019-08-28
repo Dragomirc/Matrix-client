@@ -32,7 +32,7 @@ export default class ProductService {
     });
   }
 
-  static getProducts() {
+  static async getProducts() {
     return Config.fetch().then(config => {
       const url = `${config.services.shop}/products`;
       const options = {
