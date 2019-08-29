@@ -1,0 +1,6 @@
+/* eslint-disable */
+export const PRODUCT = {
+    GET_REQUEST: 'PRODUCT.GET_REQUEST',
+    GET_SUCCESS: 'PRODUCT.GET_SUCCESS',
+    GET_FAIL: 'PRODUCT.GET_FAIL'
+};

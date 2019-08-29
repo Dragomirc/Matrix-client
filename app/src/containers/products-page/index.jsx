@@ -1,24 +1,21 @@
-import React, { Component } from "react";
-import { Container } from "reactstrap";
-import ProductService from "app/services/api/product";
-import ProductList from "app/components/product-list";
+/* eslint-disable */
+import React, { Component } from 'react';
+import { Container } from 'reactstrap';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { getProducts } from 'app/redux/actions/product';
+import ProductList from 'app/components/product-list';
 
 class ProductsPage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            products: []
-        };
-    }
-
-    componentDidMount() {
-        ProductService.getProducts().then(res => {
-            this.setState({ products: res });
-        });
+    static fetchData(store) {
+        return store.dispatch(getProducts());
     }
 
     render() {
-        const { products } = this.state;
+        const {
+            shop: { products }
+        } = this.props;
+
         return (
             <Container>
                 <ProductList products={products} />
@@ -27,4 +24,9 @@ class ProductsPage extends Component {
     }
 }
 
-export default ProductsPage;
+const mapStateToProps = ({ shop }) => ({ shop });
+export default connect(mapStateToProps)(ProductsPage);
+
+ProductsPage.propTypes = {
+    shop: PropTypes.object.isRequired
+};

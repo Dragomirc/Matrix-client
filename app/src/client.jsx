@@ -10,16 +10,18 @@ import reducers from 'app/redux/reducers';
 import routes from 'app/routes/client';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const deserialize = serializedJavascript =>
+    eval('(' + serializedJavascript + ')');
 
 const store = createStore(
-  reducers,
-  window.INITIAL_STATE,
-  composeEnhancers(applyMiddleware(thunk))
+    reducers,
+    deserialize(window.INITIAL_STATE),
+    composeEnhancers(applyMiddleware(thunk))
 );
 
 ReactDOM.hydrate(
-  <Provider store={store}>
-    <BrowserRouter>{renderRoutes(routes)}</BrowserRouter>
-  </Provider>,
-  document.querySelector('#app')
+    <Provider store={store}>
+        <BrowserRouter>{renderRoutes(routes)}</BrowserRouter>
+    </Provider>,
+    document.querySelector('#app')
 );

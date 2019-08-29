@@ -6,39 +6,39 @@
 {{/if}}
 
 <head>
-	{{#if helmet}}
-	{{{ createMetaTags helmet}}}
-	{{/if}}
+    {{#if helmet}}
+    {{{ createMetaTags helmet}}}
+    {{/if}}
 
 
-	{{#if vendorstyle}}
-	<link rel="stylesheet" type="text/css" href="{{{vendorstyle}}}" />
-	{{/if}}
-	{{#if css}}
-	<link rel="stylesheet" type="text/css" href="{{{css}}}" />
-	{{/if}}
-	<script> </script>
-	<!-- We need to do the above to allow css to load -->
+    {{#if vendorstyle}}
+    <link rel="stylesheet" type="text/css" href="{{{vendorstyle}}}" />
+    {{/if}}
+    {{#if css}}
+    <link rel="stylesheet" type="text/css" href="{{{css}}}" />
+    {{/if}}
+    <script> </script>
+    <!-- We need to do the above to allow css to load -->
 </head>
 {{#if helmet}}
 {{{ createBodyTag helmet}}}
 {{else}}
 
 <body>
-	{{/if}}
-	<div id="app">{{{content}}}</div>
-	<script>
-		window.INITIAL_STATE = "{{{state}}}"
-	</script>
-	{{#if polyfill}}
-	<script type="text/javascript" src="{{{polyfill}}}"></script>
-	{{/if}}
-	{{#if vendor}}
-	<script type="text/javascript" src="{{{vendor}}}"></script>
-	{{/if}}
-	{{#if script}}
-	<script type="text/javascript" src="{{{script}}}"></script>
-	{{/if}}
+    {{/if}}
+    <div id="app">{{{content}}}</div>
+    <script>
+        window.INITIAL_STATE = '{{{ state }}}'
+    </script>
+    {{#if polyfill}}
+    <script type="text/javascript" src="{{{polyfill}}}"></script>
+    {{/if}}
+    {{#if vendor}}
+    <script type="text/javascript" src="{{{vendor}}}"></script>
+    {{/if}}
+    {{#if script}}
+    <script type="text/javascript" src="{{{script}}}"></script>
+    {{/if}}
 </body>
 
 </html>
