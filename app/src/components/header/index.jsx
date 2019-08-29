@@ -8,6 +8,7 @@ import {
     NavItem,
     NavLink
 } from "reactstrap";
+import { Link } from "react-router-dom";
 import styles from "./styles.scss";
 
 class Header extends Component {
@@ -28,7 +29,7 @@ class Header extends Component {
         const { isOpen } = this.state;
         return (
             <Navbar color="light" light expand="md">
-                <NavbarBrand href="/" className={styles.navLink}>
+                <NavbarBrand to="/" className={styles.navLink}>
                     Logo
                 </NavbarBrand>
                 <NavbarToggler onClick={this.toggle} />
@@ -36,7 +37,8 @@ class Header extends Component {
                     <Nav navbar className="ml-auto">
                         <NavItem>
                             <NavLink
-                                href="/products"
+                                tag={Link}
+                                to="/products"
                                 className={styles.navLink}
                             >
                                 Products
@@ -44,19 +46,28 @@ class Header extends Component {
                         </NavItem>
                         <NavItem>
                             <NavLink
-                                href="/add-product"
+                                tag={Link}
+                                to="/add-product"
                                 className={styles.navLink}
                             >
                                 Add Product
                             </NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink href="/login" className={styles.navLink}>
+                            <NavLink
+                                tag={Link}
+                                to="/login"
+                                className={styles.navLink}
+                            >
                                 Login
                             </NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink href="/signup" className={styles.navLink}>
+                            <NavLink
+                                tag={Link}
+                                to="/signup"
+                                className={styles.navLink}
+                            >
                                 Signup
                             </NavLink>
                         </NavItem>

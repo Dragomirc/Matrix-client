@@ -8,7 +8,7 @@ const initialState = {
 
 const productReducer = (state = initialState, { type, payload }) => {
     switch (type) {
-        case PRODUCT.GET_REQUEST:
+        case PRODUCT.REQUEST:
             return {
                 ...state,
                 loading: true
@@ -19,10 +19,16 @@ const productReducer = (state = initialState, { type, payload }) => {
                 products: [...payload],
                 loading: true
             };
-        case PRODUCT.GET_FAIL: {
+        case PRODUCT.CREATE_SUCCESS:
             return {
                 ...state,
-                laoding: false,
+                products: [payload, ...state.products],
+                loading: true
+            };
+        case PRODUCT.FAIL: {
+            return {
+                ...state,
+                loading: false,
                 error: payload
             };
         }
