@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { renderRoutes } from 'react-router-config';
-import Header from 'app/components/header';
+import React from "react";
+import PropTypes from "prop-types";
+import { renderRoutes } from "react-router-config";
+import Header from "app/components/header";
 
 const App = ({ route }) => (
     <>
