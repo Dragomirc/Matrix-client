@@ -1,31 +1,32 @@
-import { PRODUCT } from "app/redux/constants";
+/* eslint-disable import/prefer-default-export */
+import { SHOP, PRODUCT } from "app/redux/constants";
 
-const initialState = {
+const shopInitialState = {
     products: [],
     error: null,
     loading: false
 };
 
-const productReducer = (state = initialState, { type, payload }) => {
+export const shopReducer = (state = shopInitialState, { type, payload }) => {
     switch (type) {
-        case PRODUCT.REQUEST:
+        case SHOP.FETCH_PRODUCTS_REQUEST:
             return {
                 ...state,
                 loading: true
             };
-        case PRODUCT.GET_SUCCESS:
+        case SHOP.GET_PRODUCTS_SUCCESS:
             return {
                 ...state,
                 products: [...payload],
                 loading: true
             };
-        case PRODUCT.CREATE_SUCCESS:
+        case SHOP.CREATE_PRODUCT_SUCCESS:
             return {
                 ...state,
                 products: [payload, ...state.products],
                 loading: true
             };
-        case PRODUCT.FAIL: {
+        case SHOP.FETCH_PRODUCTS_FAIL: {
             return {
                 ...state,
                 loading: false,
@@ -37,4 +38,37 @@ const productReducer = (state = initialState, { type, payload }) => {
     }
 };
 
-export default productReducer;
+const productInitialState = {
+    details: null,
+    loading: false,
+    error: null
+};
+export const productReducer = (
+    state = productInitialState,
+    { type, payload }
+) => {
+    switch (type) {
+        case PRODUCT.FETCH_PRODUCT_REQUEST: {
+            return {
+                ...state,
+                loading: true
+            };
+        }
+        case PRODUCT.GET_PRODUCT_SUCCESS: {
+            return {
+                ...state,
+                loading: false,
+                details: payload
+            };
+        }
+        case PRODUCT.FETCH_PRODUCT_FAIL: {
+            return {
+                ...state,
+                loading: false,
+                error: payload
+            };
+        }
+        default:
+            return state;
+    }
+};

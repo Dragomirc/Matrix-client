@@ -1,32 +1,46 @@
-import { PRODUCT } from "app/redux/constants";
+import { SHOP, PRODUCT } from "app/redux/constants";
 import ProductService from "app/services/api/product";
 
 export const getProducts = () => dispatch => {
-    dispatch({ type: PRODUCT.FETCH_REQUEST });
+    dispatch({ type: SHOP.FETCH_PRODUCTS_REQUEST });
 
     return ProductService.getProducts()
         .then(res => {
             dispatch({
-                type: PRODUCT.GET_SUCCESS,
+                type: SHOP.GET_PRODUCTS_SUCCESS,
                 payload: res
             });
         })
         .catch(err => {
-            dispatch({ type: PRODUCT.FETCH_FAIL, payload: err.message });
+            dispatch({ type: SHOP.FETCH_PRODUCTS_FAIL, payload: err.message });
         });
 };
 
 export const createProduct = product => dispatch => {
-    dispatch({ type: PRODUCT.FETCH_REQUEST });
+    dispatch({ type: SHOP.FETCH_PRODUCTS_REQUEST });
     return ProductService.createProduct(product)
         .then(res => {
             dispatch({
-                type: PRODUCT.CREATE_SUCCESS,
+                type: SHOP.CREATE_PRODUCT_SUCCESS,
                 payload: res.product
             });
         })
 
         .catch(err => {
-            dispatch({ type: PRODUCT.FETCH_FAIL, payload: err.message });
+            dispatch({ type: SHOP.FETCH_PRODUCTS_FAIL, payload: err.message });
+        });
+};
+
+export const getProduct = productId => dispatch => {
+    dispatch({ type: PRODUCT.FETCH_PRODUCT_REQUEST });
+    return ProductService.getProduct(productId)
+        .then(res => {
+            dispatch({ type: PRODUCT.GET_PRODUCT_SUCCESS, payload: res });
+        })
+        .catch(err => {
+            dispatch({
+                type: PRODUCT.FETCH_PRODUCT_FAIL,
+                payload: err.message
+            });
         });
 };

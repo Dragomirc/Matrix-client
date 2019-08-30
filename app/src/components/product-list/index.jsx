@@ -5,9 +5,10 @@ import ProductCard from "app/components/product-card";
 const ProductList = props => {
     const { products } = props;
     const productList = products.map(
-        ({ title, price, imageUrl, description }) => (
+        ({ title, price, imageUrl, description, _id }) => (
             <ProductCard
-                key={price + title}
+                key={_id}
+                _id={_id}
                 title={title}
                 price={price}
                 imageUrl={imageUrl}

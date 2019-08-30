@@ -17,6 +17,11 @@ import routes from 'app/routes/client';
 import reducers from 'app/redux/reducers';
 
 const app = express();
+const urldecode = data => {
+    const ret = [];
+    Object.keys(data).map(item => (ret[item] = decodeURIComponent(data[item])));
+    return ret;
+};
 app.engine(
     '.hbs',
     handlebars({
@@ -49,9 +54,28 @@ app.use(express.static(path.resolve('app/compiled')));
 app.get('*', (req, res) => {
     const store = createStore(reducers, {}, applyMiddleware(thunk));
     const promises = matchRoutes(routes, req.path)
-        .map(({ route }) =>
-            route.component.fetchData ? route.component.fetchData(store) : null
-        )
+        .map(match => {
+            const fetchData = match.route.component
+                ? match.route.component.fetchData
+                : null;
+
+            return fetchData instanceof Function
+                ? fetchData({
+                      store,
+                      request: req,
+                      response: res,
+                      match,
+                      query: Object.assign(
+                          {},
+                          match.match ? urldecode(match.match.params) : {},
+                          match.route ? match.route.params : {},
+                          req.query
+                      ),
+                      session: req.session,
+                      cookies: req.cookies
+                  })
+                : Promise.resolve(null);
+        })
         .map(promise => {
             if (promise) {
                 return new Promise(resolve => {

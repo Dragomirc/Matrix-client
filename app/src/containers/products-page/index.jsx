@@ -7,7 +7,7 @@ import { getProducts } from 'app/redux/actions/product';
 import ProductList from 'app/components/product-list';
 
 class ProductsPage extends Component {
-    static fetchData(store) {
+    static fetchData({ store }) {
         return store.dispatch(getProducts());
     }
 

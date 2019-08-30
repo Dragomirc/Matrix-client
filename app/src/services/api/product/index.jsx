@@ -56,4 +56,25 @@ export default class ProductService {
             });
         });
     }
+
+    static async getProduct(id) {
+        return Config.fetch().then(config => {
+            const url = `${config.services.shop}/products/${id}`;
+            const options = {
+                method: "GET"
+            };
+            return fetch(url, options).then(async response => {
+                const statusCode = response.status;
+                const res = await response.json();
+                switch (statusCode) {
+                    case 200:
+                        return res;
+                    case 500:
+                        throw new Error(res.message);
+                    default:
+                        throw new Error("GET Product Service on getProduct()");
+                }
+            });
+        });
+    }
 }
