@@ -68,6 +68,12 @@ export const productReducer = (
                 error: payload
             };
         }
+        case PRODUCT.UPDATE_PRODUCT_DETAIL: {
+            return {
+                ...state,
+                details: { ...state.details, [payload.property]: payload.value }
+            };
+        }
         default:
             return state;
     }

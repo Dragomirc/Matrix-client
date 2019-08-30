@@ -4,6 +4,7 @@ import App from "app/components/app";
 import HomePage from "app/containers/home-page";
 import AddProductPage from "app/containers/add-product-page";
 import ProductsPage from "app/containers/products-page";
+import EditProductPage from "app/containers/edit-product-page";
 import ProductDetailsPage from "app/containers/product-details-page";
 
 const routes = [
@@ -20,8 +21,12 @@ const routes = [
                 path: "/add-product"
             },
             {
+                component: EditProductPage,
+                path: "/edit/:productId"
+            },
+            {
                 component: ProductsPage,
-                path: "/products",
+                path: ["/products", "/admin-products"],
                 exact: true
             },
             {

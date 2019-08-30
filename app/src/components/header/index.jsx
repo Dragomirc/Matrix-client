@@ -56,6 +56,15 @@ class Header extends Component {
                         <NavItem>
                             <NavLink
                                 tag={Link}
+                                to="/admin-products"
+                                className={styles.navLink}
+                            >
+                                Admin Products
+                            </NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink
+                                tag={Link}
                                 to="/login"
                                 className={styles.navLink}
                             >

@@ -44,3 +44,10 @@ export const getProduct = productId => dispatch => {
             });
         });
 };
+
+export const updateProductDetail = (property, value) => {
+    return {
+        type: PRODUCT.UPDATE_PRODUCT_DETAIL,
+        payload: { property, value }
+    };
+};

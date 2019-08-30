@@ -18,8 +18,32 @@ class ProductCard extends Component {
         history.push(`/products/${_id}`);
     };
 
+    onEditClick = () => {
+        const { history, _id } = this.props;
+        history.push(`/edit/${_id}`);
+    };
+
     render() {
         const { description, title, price, imageUrl } = this.props;
+        const isAdmin = true;
+        let cardButtons = (
+            <>
+                <Button className="w-100 mr-1" onClick={this.onDetailsClick}>
+                    Details
+                </Button>
+                <Button className="w-100">Add to Cart</Button>
+            </>
+        );
+        if (isAdmin) {
+            cardButtons = (
+                <>
+                    <Button className="w-100 mr-1" onClick={this.onEditClick}>
+                        Edit
+                    </Button>
+                    <Button className="w-100">Delete</Button>
+                </>
+            );
+        }
         return (
             <Card className={classnames(styles.card, "m-2")}>
                 <CardBody>
@@ -32,13 +56,7 @@ class ProductCard extends Component {
                     <CardText className="text-center">{description}</CardText>
                     <CardText className="text-center">{`${price} $`}</CardText>
                     <div className="d-flex justify-content-between">
-                        <Button
-                            className="w-100 mr-1"
-                            onClick={this.onDetailsClick}
-                        >
-                            Details
-                        </Button>
-                        <Button className="w-100">Add to Cart</Button>
+                        {cardButtons}
                     </div>
                 </CardBody>
             </Card>

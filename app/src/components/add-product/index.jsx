@@ -1,42 +1,51 @@
-import React, { Component } from "react";
-import { Form, FormGroup, Label, Input, Button } from "reactstrap";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import classnames from "classnames";
-import { createProduct } from "app/redux/actions/product";
-import styles from "./styles.scss";
+/* eslint-disable */
+import React, { Component } from 'react';
+import { Form, FormGroup, Label, Input, Button, Spinner } from 'reactstrap';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import { createProduct, updateProductDetail } from 'app/redux/actions/product';
+import styles from './styles.scss';
 
 class AddProduct extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            title: "",
-            description: "",
-            price: "",
-            image: ""
-        };
-    }
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //         title: '',
+    //         description: '',
+    //         price: '',
+    //         image: ''
+    //     };
+    // }
 
     onInputChange = ({ target: { value, name, files } }) => {
+        const { updateProductDetailConnect } = this.props;
         if (files) {
-            this.setState({ [name]: files[0] });
+            updateProductDetailConnect(name, files[0]);
         } else {
-            this.setState({ [name]: value });
+            updateProductDetailConnect(name, value);
         }
     };
 
     onSubmit = event => {
-        const { createProductConnect } = this.props;
         event.preventDefault();
-        createProductConnect(this.state);
+        const { createProductConnect, product } = this.props;
+        console.log(product);
+        createProductConnect(product);
     };
 
     render() {
-        const { title, description, price } = this.state;
+        const product = this.props;
+        if (!product) {
+            return <Spinner />;
+        }
 
+        const {
+            product: { title, description, price }
+        } = this.props;
         return (
             <Form
-                className={classnames(styles.form, "mx-auto mt-3")}
+                className={classnames(styles.form, 'mx-auto mt-3')}
                 onSubmit={this.onSubmit}
             >
                 <FormGroup>
@@ -46,7 +55,7 @@ class AddProduct extends Component {
                         name="title"
                         type="text"
                         autoComplete="off"
-                        value={title}
+                        value={title || ''}
                         onChange={this.onInputChange}
                     />
                 </FormGroup>
@@ -65,7 +74,7 @@ class AddProduct extends Component {
                         id="description"
                         name="description"
                         type="textarea"
-                        value={description}
+                        value={description || ''}
                         onChange={this.onInputChange}
                     />
                 </FormGroup>
@@ -76,7 +85,7 @@ class AddProduct extends Component {
                         name="price"
                         type="number"
                         step="0.01"
-                        value={price}
+                        value={price || ''}
                         onChange={this.onInputChange}
                     />
                 </FormGroup>
@@ -88,9 +97,18 @@ class AddProduct extends Component {
 
 export default connect(
     undefined,
-    { createProductConnect: createProduct }
+    {
+        createProductConnect: createProduct,
+        updateProductDetailConnect: updateProductDetail
+    }
 )(AddProduct);
 
 AddProduct.propTypes = {
-    createProductConnect: PropTypes.func.isRequired
+    createProductConnect: PropTypes.func.isRequired,
+    updateProductDetailConnect: PropTypes.func.isRequired,
+    product: PropTypes.object
+};
+
+AddProduct.defaultProps = {
+    product: null
 };

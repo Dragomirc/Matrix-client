@@ -1,14 +1,23 @@
-/* eslint-disable */
-import React, { Component } from 'react';
-import { Container } from 'reactstrap';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { getProducts } from 'app/redux/actions/product';
-import ProductList from 'app/components/product-list';
+import React, { Component } from "react";
+import { Container } from "reactstrap";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { getProducts } from "app/redux/actions/product";
+import ProductList from "app/components/product-list";
 
 class ProductsPage extends Component {
     static fetchData({ store }) {
         return store.dispatch(getProducts());
+    }
+
+    componentDidMount() {
+        const {
+            getProductsConnect,
+            shop: { products }
+        } = this.props;
+        if (!products.length) {
+            getProductsConnect();
+        }
     }
 
     render() {
@@ -25,8 +34,12 @@ class ProductsPage extends Component {
 }
 
 const mapStateToProps = ({ shop }) => ({ shop });
-export default connect(mapStateToProps)(ProductsPage);
+export default connect(
+    mapStateToProps,
+    { getProductsConnect: getProducts }
+)(ProductsPage);
 
 ProductsPage.propTypes = {
-    shop: PropTypes.object.isRequired
+    shop: PropTypes.object.isRequired,
+    getProductsConnect: PropTypes.func.isRequired
 };
