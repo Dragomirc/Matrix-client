@@ -39,7 +39,7 @@ export const shopReducer = (state = shopInitialState, { type, payload }) => {
 };
 
 const productInitialState = {
-    details: null,
+    details: {},
     loading: false,
     error: null
 };

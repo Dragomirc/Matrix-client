@@ -2,7 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Container } from "reactstrap";
-import { getProduct } from "app/redux/actions/product";
+import {
+    createProduct,
+    updateProductDetail,
+    getProduct
+} from "app/redux/actions/product";
+
 import AddProduct from "app/components/add-product";
 
 class EditProductPage extends Component {
@@ -23,11 +28,31 @@ class EditProductPage extends Component {
         }
     }
 
+    onInputChange = ({ target: { value, name, files } }) => {
+        const { updateProductDetailConnect } = this.props;
+        if (files) {
+            updateProductDetailConnect(name, files[0]);
+        } else {
+            updateProductDetailConnect(name, value);
+        }
+    };
+
+    onSubmit = event => {
+        event.preventDefault();
+        const { createProductConnect, product } = this.props;
+        createProductConnect(product);
+    };
+
     render() {
         const { product } = this.props;
         return (
             <Container>
-                <AddProduct product={product} isEditing />
+                <AddProduct
+                    product={product}
+                    onInputChange={this.onInputChange}
+                    onSubmit={this.onSubmit}
+                    btnText="Edit Product"
+                />
             </Container>
         );
     }
@@ -40,16 +65,17 @@ const mapStateToProps = ({ product }) => ({
 
 export default connect(
     mapStateToProps,
-    { getProductConnect: getProduct }
+    {
+        getProductConnect: getProduct,
+        createProductConnect: createProduct,
+        updateProductDetailConnect: updateProductDetail
+    }
 )(EditProductPage);
 
 EditProductPage.propTypes = {
-    // loading: PropTypes.bool.isRequired,
-    product: PropTypes.object,
+    createProductConnect: PropTypes.func.isRequired,
+    updateProductDetailConnect: PropTypes.func.isRequired,
+    product: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
     getProductConnect: PropTypes.func.isRequired
-};
-
-EditProductPage.defaultProps = {
-    product: null
 };
