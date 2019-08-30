@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
 import { getProduct } from "app/redux/actions/product";
 import { Container, Spinner, Row, Button } from "reactstrap";
+import styles from "./styles.scss";
 
 class ProductDetailsPage extends Component {
     static fetchData({ store, query }) {
@@ -27,13 +27,23 @@ class ProductDetailsPage extends Component {
         if (!loading && product) {
             productDetailsView = (
                 <>
-                    <Row>{product.title}</Row>
-                    <Row>
-                        <img src={product.imageUrl} alt="product" />
+                    <Row className="justify-content-center">
+                        <h2>{product.title}</h2>
                     </Row>
-                    <Row>{product.price}</Row>
-                    <Row>{product.description}</Row>
-                    <Row>
+                    <Row className="justify-content-center">
+                        <img
+                            className={styles.image}
+                            src={product.imageUrl}
+                            alt="product"
+                        />
+                    </Row>
+                    <Row className="justify-content-center">
+                        {`${product.price} $`}
+                    </Row>
+                    <Row className="justify-content-center">
+                        {product.description}
+                    </Row>
+                    <Row className="justify-content-center">
                         <Button>Add to Cart</Button>
                     </Row>
                 </>
@@ -51,7 +61,7 @@ const mapStateToProps = ({ product }) => ({
 export default connect(
     mapStateToProps,
     { getProductConnect: getProduct }
-)(withRouter(ProductDetailsPage));
+)(ProductDetailsPage);
 
 ProductDetailsPage.propTypes = {
     loading: PropTypes.bool.isRequired,
