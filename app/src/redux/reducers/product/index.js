@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { SHOP, PRODUCT } from "app/redux/constants";
 
 const shopInitialState = {
