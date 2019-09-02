@@ -1,16 +1,27 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { getProducts } from "app/redux/actions/product";
 import { renderRoutes } from "react-router-config";
 import Header from "app/components/header";
 
-const App = ({ route }) => (
-    <>
-        <Header />
-        {renderRoutes(route.routes)}
-    </>
-);
+class App extends Component {
+    static fetchData({ store }) {
+        return store.dispatch(getProducts());
+    }
+
+    render() {
+        const { route } = this.props;
+        return (
+            <>
+                <Header />
+                {renderRoutes(route.routes)}
+            </>
+        );
+    }
+}
 
 App.propTypes = {
     route: PropTypes.object.isRequired
 };
+
 export default App;

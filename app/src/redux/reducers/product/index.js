@@ -7,6 +7,16 @@ const shopInitialState = {
     loading: false
 };
 
+const updateProduct = (products, updatedProduct) => {
+    const updatedProducts = [...products];
+    const index = updatedProducts.findIndex(product => {
+        return updatedProduct._id === product._id;
+    });
+    if (index !== -1) {
+        updatedProducts[index] = updatedProduct;
+    }
+    return updatedProducts;
+};
 export const shopReducer = (state = shopInitialState, { type, payload }) => {
     switch (type) {
         case SHOP.FETCH_PRODUCTS_REQUEST:
@@ -18,13 +28,19 @@ export const shopReducer = (state = shopInitialState, { type, payload }) => {
             return {
                 ...state,
                 products: [...payload],
-                loading: true
+                loading: false
             };
         case SHOP.CREATE_PRODUCT_SUCCESS:
             return {
                 ...state,
                 products: [payload, ...state.products],
-                loading: true
+                loading: false
+            };
+        case SHOP.UPDATE_PRODUCT_SUCCESS:
+            return {
+                ...state,
+                products: updateProduct(state.products, payload),
+                loading: false
             };
         case SHOP.FETCH_PRODUCTS_FAIL: {
             return {

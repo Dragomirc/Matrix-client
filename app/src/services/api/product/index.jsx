@@ -34,6 +34,40 @@ export default class ProductService {
         });
     }
 
+    static updateProduct(product) {
+        return Config.fetch().then(config => {
+            const url = `${config.services.admin}/product`;
+            const { title, description, price, image, imageUrl, _id } = product;
+            const formData = new FormData();
+            formData.append("title", title);
+            formData.append("price", price);
+            formData.append("description", description);
+            formData.append("imageUrl", imageUrl);
+            formData.append("_id", _id);
+            formData.append("image", image);
+            const options = {
+                method: "PUT",
+                body: formData
+            };
+            return fetch(url, options).then(async response => {
+                const statusCode = response.status;
+                const res = await response.json();
+                switch (statusCode) {
+                    case 200:
+                        return res;
+                    case 422:
+                        throw new Error(res);
+                    case 500:
+                        throw new Error(res.message);
+                    default:
+                        throw new Error(
+                            "PUT Product Service Error on createProduct"
+                        );
+                }
+            });
+        });
+    }
+
     static async getProducts() {
         return Config.fetch().then(config => {
             const url = `${config.services.shop}/products`;

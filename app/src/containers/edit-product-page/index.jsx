@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Container } from "reactstrap";
 import {
-    createProduct,
+    updateProduct,
     updateProductDetail,
     getProduct
 } from "app/redux/actions/product";
@@ -39,8 +39,8 @@ class EditProductPage extends Component {
 
     onSubmit = event => {
         event.preventDefault();
-        const { createProductConnect, product } = this.props;
-        createProductConnect(product);
+        const { updateProductConnect, product } = this.props;
+        updateProductConnect(product);
     };
 
     render() {
@@ -67,13 +67,13 @@ export default connect(
     mapStateToProps,
     {
         getProductConnect: getProduct,
-        createProductConnect: createProduct,
+        updateProductConnect: updateProduct,
         updateProductDetailConnect: updateProductDetail
     }
 )(EditProductPage);
 
 EditProductPage.propTypes = {
-    createProductConnect: PropTypes.func.isRequired,
+    updateProductConnect: PropTypes.func.isRequired,
     updateProductDetailConnect: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
