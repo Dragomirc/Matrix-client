@@ -17,6 +17,16 @@ const updateProduct = (products, updatedProduct) => {
     }
     return updatedProducts;
 };
+const deleteProduct = (products, updatedProduct) => {
+    const updatedProducts = [...products];
+    const index = updatedProducts.findIndex(product => {
+        return updatedProduct._id === product._id;
+    });
+    if (index !== -1) {
+        updatedProducts.splice(index, 1);
+    }
+    return updatedProducts;
+};
 export const shopReducer = (state = shopInitialState, { type, payload }) => {
     switch (type) {
         case SHOP.FETCH_PRODUCTS_REQUEST:
@@ -40,6 +50,12 @@ export const shopReducer = (state = shopInitialState, { type, payload }) => {
             return {
                 ...state,
                 products: updateProduct(state.products, payload),
+                loading: false
+            };
+        case SHOP.DELETE_PRODUCT_SUCCESS:
+            return {
+                ...state,
+                products: deleteProduct(state.products, payload),
                 loading: false
             };
         case SHOP.FETCH_PRODUCTS_FAIL: {

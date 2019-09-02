@@ -47,6 +47,22 @@ export const updateProduct = product => dispatch => {
             });
         });
 };
+export const deleteProduct = productId => dispatch => {
+    dispatch({ type: SHOP.FETCH_PRODUCTS_REQUEST });
+    return ProductService.deleteProduct(productId)
+        .then(res => {
+            dispatch({
+                type: SHOP.DELETE_PRODUCT_SUCCESS,
+                payload: res.product
+            });
+        })
+        .catch(err => {
+            dispatch({
+                type: SHOP.FETCH_PRODUCTS_FAIL,
+                payload: err.message
+            });
+        });
+};
 
 export const getProduct = productId => dispatch => {
     dispatch({ type: PRODUCT.FETCH_PRODUCT_REQUEST });

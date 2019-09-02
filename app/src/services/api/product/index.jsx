@@ -68,7 +68,30 @@ export default class ProductService {
         });
     }
 
-    static async getProducts() {
+    static deleteProduct(productId) {
+        return Config.fetch().then(config => {
+            const url = `${config.services.admin}/product/${productId}`;
+            const options = {
+                method: "DELETE"
+            };
+            return fetch(url, options).then(async response => {
+                const statusCode = response.status;
+                const res = await response.json();
+                switch (statusCode) {
+                    case 200:
+                        return res;
+                    case 500:
+                        throw new Error(res.message);
+                    default:
+                        throw new Error(
+                            "DELETE Product Service Error on deleteProduct."
+                        );
+                }
+            });
+        });
+    }
+
+    static getProducts() {
         return Config.fetch().then(config => {
             const url = `${config.services.shop}/products`;
             const options = {
@@ -91,7 +114,7 @@ export default class ProductService {
         });
     }
 
-    static async getProduct(id) {
+    static getProduct(id) {
         return Config.fetch().then(config => {
             const url = `${config.services.shop}/products/${id}`;
             const options = {

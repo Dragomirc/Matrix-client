@@ -9,6 +9,8 @@ import {
 } from "reactstrap";
 import PropTypes from "prop-types";
 import classnames from "classnames";
+import { connect } from "react-redux";
+import { deleteProduct } from "app/redux/actions/product";
 import { withRouter } from "react-router-dom";
 import styles from "./styles.scss";
 
@@ -21,6 +23,13 @@ class ProductCard extends Component {
     onEditClick = () => {
         const { history, _id } = this.props;
         history.push(`/edit/${_id}`);
+    };
+
+    onDeleteClick = () => {
+        const { history, _id, deleteProductConnect } = this.props;
+        deleteProductConnect(_id).then(() => {
+            history.push("/admin-products");
+        });
     };
 
     render() {
@@ -40,7 +49,9 @@ class ProductCard extends Component {
                     <Button className="w-100 mr-1" onClick={this.onEditClick}>
                         Edit
                     </Button>
-                    <Button className="w-100">Delete</Button>
+                    <Button className="w-100" onClick={this.onDeleteClick}>
+                        Delete
+                    </Button>
                 </>
             );
         }
@@ -64,7 +75,10 @@ class ProductCard extends Component {
     }
 }
 
-export default withRouter(ProductCard);
+export default connect(
+    undefined,
+    { deleteProductConnect: deleteProduct }
+)(withRouter(ProductCard));
 
 ProductCard.propTypes = {
     description: PropTypes.string.isRequired,
@@ -72,5 +86,6 @@ ProductCard.propTypes = {
     price: PropTypes.number.isRequired,
     imageUrl: PropTypes.string.isRequired,
     _id: PropTypes.string.isRequired,
-    history: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired,
+    deleteProductConnect: PropTypes.func.isRequired
 };
