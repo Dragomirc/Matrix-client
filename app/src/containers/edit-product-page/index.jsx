@@ -39,8 +39,10 @@ class EditProductPage extends Component {
 
     onSubmit = event => {
         event.preventDefault();
-        const { updateProductConnect, product } = this.props;
-        updateProductConnect(product);
+        const { updateProductConnect, product, history } = this.props;
+        updateProductConnect(product).then(() =>
+            history.push("/admin-products")
+        );
     };
 
     render() {
@@ -77,5 +79,6 @@ EditProductPage.propTypes = {
     updateProductDetailConnect: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
     getProductConnect: PropTypes.func.isRequired
 };

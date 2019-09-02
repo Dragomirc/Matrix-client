@@ -27,8 +27,10 @@ class AddProductPage extends Component {
 
     onSubmit = event => {
         event.preventDefault();
-        const { createProductConnect } = this.props;
-        createProductConnect(this.state);
+        const { createProductConnect, history } = this.props;
+        createProductConnect(this.state).then(() =>
+            history.push("/admin-products")
+        );
     };
 
     render() {
@@ -51,5 +53,6 @@ export default connect(
 )(AddProductPage);
 
 AddProductPage.propTypes = {
-    createProductConnect: PropTypes.func.isRequired
+    createProductConnect: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired
 };
