@@ -5,9 +5,9 @@ export default class AuthService {
     static signup(user) {
         return Config.fetch().then(config => {
             const url = `${config.services.auth}/signup`;
-            console.log(user);
             const options = {
                 method: "POST",
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(user)
             };
             return fetch(url, options).then(async response => {
