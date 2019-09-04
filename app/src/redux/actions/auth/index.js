@@ -12,3 +12,16 @@ export const signup = user => dispatch => {
             dispatch({ type: AUTH.FETCH_FAIL, payload: err.message });
         });
 };
+
+export const login = user => dispatch => {
+    dispatch({ type: AUTH.FETCH_REQUEST });
+    return AuthService.login(user)
+        .then(res => {
+            localStorage.setItem("token", res.token);
+            localStorage.setItem("userId", res.userId);
+            dispatch({ type: AUTH.LOGIN_SUCCESS, payload: res });
+        })
+        .catch(err => {
+            dispatch({ type: AUTH.FETCH_FAIL, payload: err.message });
+        });
+};

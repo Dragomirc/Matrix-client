@@ -2,8 +2,9 @@
 import { AUTH } from "app/redux/constants";
 
 const authInitialState = {
-    user: null,
+    userId: null,
     error: null,
+    token: null,
     loading: false
 };
 
@@ -24,9 +25,14 @@ export const authReducer = (state = authInitialState, { type, payload }) => {
             return {
                 ...state,
                 loading: false,
-                user: {
-                    userId: payload
-                }
+                userId: payload
+            };
+        case AUTH.LOGIN_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                userId: payload.userId,
+                token: payload.token
             };
         default:
             return state;

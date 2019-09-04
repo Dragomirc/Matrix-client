@@ -7,6 +7,7 @@ import ProductsPage from "app/containers/products-page";
 import EditProductPage from "app/containers/edit-product-page";
 import ProductDetailsPage from "app/containers/product-details-page";
 import SignupPage from "app/containers/signup-page";
+import LoginPage from "app/containers/login-page";
 
 const routes = [
     {
@@ -24,6 +25,10 @@ const routes = [
             {
                 component: SignupPage,
                 path: "/signup"
+            },
+            {
+                component: LoginPage,
+                path: "/login"
             },
             {
                 component: EditProductPage,

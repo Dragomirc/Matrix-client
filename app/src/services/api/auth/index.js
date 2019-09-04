@@ -27,4 +27,29 @@ export default class AuthService {
             });
         });
     }
+
+    static login(user) {
+        return Config.fetch().then(config => {
+            const url = `${config.services.auth}/login`;
+            const options = {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(user)
+            };
+            return fetch(url, options).then(async response => {
+                const statusCode = response.status;
+                const res = await response.json();
+                switch (statusCode) {
+                    case 200:
+                        return res;
+                    case 422:
+                        throw new Error(res);
+                    case 500:
+                        throw new Error(res.message);
+                    default:
+                        throw new Error("POST Auth Service Error on login");
+                }
+            });
+        });
+    }
 }
