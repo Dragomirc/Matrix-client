@@ -39,6 +39,7 @@ const AddProduct = props => {
             <FormGroup>
                 <Label htmlFor="description">Description</Label>
                 <Input
+                    spellCheck="true"
                     id="description"
                     name="description"
                     type="textarea"

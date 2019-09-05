@@ -25,3 +25,12 @@ export const login = user => dispatch => {
             dispatch({ type: AUTH.FETCH_FAIL, payload: err.message });
         });
 };
+
+export const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    return {
+        type: AUTH.LOGIN_SUCCESS,
+        payload: { userId: null, token: null }
+    };
+};
