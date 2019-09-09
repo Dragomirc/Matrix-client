@@ -34,3 +34,12 @@ export const logout = () => {
         payload: { userId: null, token: null }
     };
 };
+
+export const authCheckState = () => dispatch => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+        dispatch(logout());
+    } else {
+        // console.log(jwt.decode(token));
+    }
+};

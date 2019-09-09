@@ -10,9 +10,11 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
+import cookieParser from 'cookie-parser';
 import { Provider } from 'react-redux';
 import serialize from 'serialize-javascript';
 import { Helmet } from 'react-helmet';
+import proxy from 'express-http-proxy';
 import routes from 'app/routes/client';
 import reducers from 'app/redux/reducers';
 
@@ -22,6 +24,7 @@ const urldecode = data => {
     Object.keys(data).map(item => (ret[item] = decodeURIComponent(data[item])));
     return ret;
 };
+app.use(cookieParser());
 app.engine(
     '.hbs',
     handlebars({
@@ -49,7 +52,15 @@ app.use((req, res, next) => {
     );
     next();
 });
-
+app.use(
+    '/api',
+    proxy('http://localhost:8080', {
+        proxyReqOptDecorator(opts) {
+            opts.headers['x-forwarded-host'] = 'localhost:3000';
+            return opts;
+        }
+    })
+);
 app.use(express.static(path.resolve('app/compiled')));
 app.get('*', (req, res) => {
     const store = createStore(reducers, {}, applyMiddleware(thunk));
