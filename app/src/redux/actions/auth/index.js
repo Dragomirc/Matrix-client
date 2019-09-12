@@ -17,8 +17,6 @@ export const login = user => dispatch => {
     dispatch({ type: AUTH.FETCH_REQUEST });
     return AuthService.login(user)
         .then(res => {
-            localStorage.setItem("token", res.token);
-            localStorage.setItem("userId", res.userId);
             dispatch({ type: AUTH.LOGIN_SUCCESS, payload: res });
         })
         .catch(err => {
@@ -27,8 +25,6 @@ export const login = user => dispatch => {
 };
 
 export const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userId");
     return {
         type: AUTH.LOGIN_SUCCESS,
         payload: { userId: null, token: null }
@@ -36,7 +32,6 @@ export const logout = () => {
 };
 
 export const authCheckState = () => dispatch => {
-    const token = localStorage.getItem("token");
     if (!token) {
         dispatch(logout());
     } else {

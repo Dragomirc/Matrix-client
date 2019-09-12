@@ -153,4 +153,5 @@ app.get('*', (req, res) => {
         res.render('index', params);
     });
 });
+app.disable('x-powered-by');
 app.listen(process.env.PORT || 3000);
