@@ -1,10 +1,12 @@
+/* eslint-disable react/static-property-placement */
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { Component } from "react";
 import { Container } from "reactstrap";
 import PropTypes from "prop-types";
 import { createProduct } from "app/redux/actions/product";
-
 import { connect } from "react-redux";
 import AddProduct from "app/components/add-product";
+import requireAuth from "app/hoc/require-auth";
 
 class AddProductPage extends Component {
     constructor(props) {
@@ -50,7 +52,7 @@ class AddProductPage extends Component {
 export default connect(
     undefined,
     { createProductConnect: createProduct }
-)(AddProductPage);
+)(requireAuth(AddProductPage));
 
 AddProductPage.propTypes = {
     createProductConnect: PropTypes.func.isRequired,
