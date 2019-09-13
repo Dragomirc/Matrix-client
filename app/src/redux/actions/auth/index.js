@@ -5,8 +5,8 @@ import AuthService from "app/services/api/auth";
 export const signup = user => dispatch => {
     dispatch({ type: AUTH.FETCH_REQUEST });
     return AuthService.signup(user)
-        .then(res => {
-            dispatch({ type: AUTH.SIGNUP_SUCCESS, payload: res.userId });
+        .then(() => {
+            dispatch({ type: AUTH.SIGNUP_SUCCESS });
         })
         .catch(err => {
             dispatch({ type: AUTH.FETCH_FAIL, payload: err.message });
@@ -27,14 +27,17 @@ export const login = user => dispatch => {
 export const logout = () => {
     return {
         type: AUTH.LOGIN_SUCCESS,
-        payload: { userId: null, token: null }
+        payload: { userId: null, userName: null }
     };
 };
 
-export const authCheckState = () => dispatch => {
-    if (!token) {
-        dispatch(logout());
-    } else {
-        // console.log(jwt.decode(token));
-    }
+export const checkAuthState = token => dispatch => {
+    dispatch({ type: AUTH.FETCH_REQUEST });
+    return AuthService.checkAuthState(token)
+        .then(res => {
+            dispatch({ type: AUTH.LOGIN_SUCCESS, payload: res });
+        })
+        .catch(err => {
+            dispatch({ type: AUTH.FETCH_FAIL, payload: err.message });
+        });
 };

@@ -32,6 +32,7 @@ export default class AuthService {
         return Config.fetch().then(config => {
             const url = `${config.services.auth}/login`;
             const options = {
+                credentials: "same-origin",
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(user)
@@ -48,6 +49,34 @@ export default class AuthService {
                         throw new Error(res.message);
                     default:
                         throw new Error("POST Auth Service Error on login");
+                }
+            });
+        });
+    }
+
+    static checkAuthState(token) {
+        return Config.fetch().then(config => {
+            const url = `${config.services.auth}/user-details`;
+            const options = {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            };
+            return fetch(url, options).then(async response => {
+                const statusCode = response.status;
+                const res = await response.json();
+                switch (statusCode) {
+                    case 200:
+                        return res;
+                    case 401:
+                        throw new Error(res.message);
+                    case 500:
+                        throw new Error(res.message);
+                    default:
+                        throw new Error(
+                            "POST Auth Service Error on checkAuthState()"
+                        );
                 }
             });
         });
