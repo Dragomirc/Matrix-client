@@ -9,7 +9,8 @@
     "scripts": {
         "clean": "node ./node_modules/del-cli/cli.js app/compiled",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "node ./node_modules/webpack/bin/webpack.js --mode development",
+        "build": "node ./node_modules/npm-run-all/bin/npm-run-all/index.js -c --parallel  sass build:prod",
+        "build:dev": "node ./node_modules/webpack/bin/webpack.js --mode development",
         "build:watch": "node ./node_modules/webpack/bin/webpack.js --mode development -w",
         "build:prod": "node ./node_modules/webpack/bin/webpack.js --mode production",
         "server": "node ./app/compiled/server.js",
