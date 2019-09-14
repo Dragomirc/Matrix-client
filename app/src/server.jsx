@@ -17,13 +17,16 @@ import { Helmet } from 'react-helmet';
 import proxy from 'express-http-proxy';
 import routes from 'app/routes/client';
 import reducers from 'app/redux/reducers';
-
+import Config from 'app/config/client'
 const app = express();
 const urldecode = data => {
     const ret = [];
     Object.keys(data).map(item => (ret[item] = decodeURIComponent(data[item])));
     return ret;
 };
+
+Config.fetch().then(config => {
+
 app.use(cookieParser());
 app.engine(
     '.hbs',
@@ -54,9 +57,9 @@ app.use((req, res, next) => {
 });
 app.use(
     '/api',
-    proxy('http://localhost:8080', {
+    proxy(`${config.services.proxy}`, {
         proxyReqOptDecorator(opts) {
-            opts.headers['x-forwarded-host'] = 'localhost:3000';
+            opts.headers['x-forwarded-host'] = `${config.services.xForwardedHost}`;
             return opts;
         }
     })
@@ -155,3 +158,5 @@ app.get('*', (req, res) => {
 });
 app.disable('x-powered-by');
 app.listen(process.env.PORT || 3000);
+
+})
