@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
 import { Container, Form, Label, Input, FormGroup, Button } from "reactstrap";
+import { Link } from "react-router-dom";
 import { login } from "app/redux/actions/auth";
 import styles from "./styles.scss";
 
@@ -56,7 +57,16 @@ class LoginPage extends Component {
                             onChange={this.onInputChange}
                         />
                     </FormGroup>
+
                     <Button className="w-100">Login</Button>
+                    <Button
+                        className="w-100"
+                        color="link"
+                        tag={Link}
+                        to="/reset-password"
+                    >
+                        Forgot password
+                    </Button>
                 </Form>
             </Container>
         );

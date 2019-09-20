@@ -81,4 +81,63 @@ export default class AuthService {
             });
         });
     }
+
+    static resetPassword(email) {
+        return Config.fetch().then(config => {
+            const url = `${config.services.auth}/reset-password`;
+            const options = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email })
+            };
+
+            return fetch(url, options).then(async response => {
+                const statusCode = response.status;
+                const res = await response.json();
+                switch (statusCode) {
+                    case 200:
+                        return res;
+                    case 404:
+                        throw new Error(res.message);
+                    case 500:
+                        throw new Error(res.message);
+                    default:
+                        throw new Error(
+                            "POST Auth Service Error on resetPassword(email)"
+                        );
+                }
+            });
+        });
+    }
+
+    static setNewPassword(body) {
+        return Config.fetch().then(config => {
+            const url = `${config.services.auth}/new-password`;
+            const options = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(body)
+            };
+            return fetch(url, options).then(async response => {
+                const statusCode = response.status;
+                const res = await response.json();
+                switch (statusCode) {
+                    case 200:
+                        return res;
+                    case 422:
+                        throw new Error(res.message);
+                    case 500:
+                        throw new Error(res.message);
+                    default:
+                        throw new Error(
+                            "POST Auth Service Error on setNewPassword(body)"
+                        );
+                }
+            });
+        });
+    }
 }
