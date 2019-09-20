@@ -22,8 +22,15 @@ class NewPasswordPage extends Component {
         e.preventDefault();
         const { password, confirmPassword } = this.state;
         if (password === confirmPassword) {
-            const { resetToken } = this.props;
-            AuthService.newPassword({ password, resetToken });
+            const {
+                match: {
+                    params: { resetToken }
+                },
+                history
+            } = this.props;
+            AuthService.setNewPassword({ password, resetToken }).then(() => {
+                history.push("/login");
+            });
         }
     };
 
@@ -65,6 +72,7 @@ class NewPasswordPage extends Component {
 }
 
 NewPasswordPage.propTypes = {
-    resetToken: PropTypes.string.isRequired
+    match: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired
 };
 export default NewPasswordPage;

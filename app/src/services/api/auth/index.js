@@ -116,7 +116,7 @@ export default class AuthService {
         return Config.fetch().then(config => {
             const url = `${config.services.auth}/new-password`;
             const options = {
-                method: "POST",
+                method: "PUT",
                 headers: {
                     "Content-Type": "application/json"
                 },

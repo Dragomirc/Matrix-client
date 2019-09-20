@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Container, Form, Input, Button, Label, FormGroup } from "reactstrap";
 import classnames from "classnames";
+import PropTypes from "prop-types";
 import AuthService from "app/services/api/auth";
 import styles from "./styles.scss";
 
@@ -19,7 +20,10 @@ class ResetPasswordPage extends Component {
     onFormSubmit = e => {
         e.preventDefault();
         const { emailValue } = this.state;
-        AuthService.resetPassword(emailValue);
+        const { history } = this.props;
+        AuthService.resetPassword(emailValue).then(() => {
+            history.push("/login");
+        });
     };
 
     render() {
@@ -48,3 +52,7 @@ class ResetPasswordPage extends Component {
 }
 
 export default ResetPasswordPage;
+
+ResetPasswordPage.propTypes = {
+    history: PropTypes.object.isRequired
+};
