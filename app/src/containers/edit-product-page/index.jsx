@@ -8,6 +8,7 @@ import {
     getProduct
 } from "app/redux/actions/product";
 import requireAuth from "app/hoc/require-auth";
+import isUserAdmin from "app/hoc/is-user-admin";
 import AddProduct from "app/components/add-product";
 
 class EditProductPage extends Component {
@@ -72,7 +73,7 @@ export default connect(
         updateProductConnect: updateProduct,
         updateProductDetailConnect: updateProductDetail
     }
-)(requireAuth(EditProductPage));
+)(requireAuth(isUserAdmin(EditProductPage)));
 
 EditProductPage.propTypes = {
     updateProductConnect: PropTypes.func.isRequired,

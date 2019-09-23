@@ -7,6 +7,7 @@ import { createProduct } from "app/redux/actions/product";
 import { connect } from "react-redux";
 import AddProduct from "app/components/add-product";
 import requireAuth from "app/hoc/require-auth";
+import isUserAdmin from "app/hoc/is-user-admin";
 
 class AddProductPage extends Component {
     constructor(props) {
@@ -52,7 +53,7 @@ class AddProductPage extends Component {
 export default connect(
     undefined,
     { createProductConnect: createProduct }
-)(requireAuth(AddProductPage));
+)(requireAuth(isUserAdmin(AddProductPage)));
 
 AddProductPage.propTypes = {
     createProductConnect: PropTypes.func.isRequired,

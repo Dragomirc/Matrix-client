@@ -33,8 +33,8 @@ class ProductCard extends Component {
     };
 
     render() {
-        const { description, title, price, imageUrl } = this.props;
-        const isAdmin = true;
+        const { description, title, price, imageUrl, admin } = this.props;
+
         let cardButtons = (
             <>
                 <Button className="w-100 mr-1" onClick={this.onDetailsClick}>
@@ -43,7 +43,7 @@ class ProductCard extends Component {
                 <Button className="w-100">Add to Cart</Button>
             </>
         );
-        if (isAdmin) {
+        if (admin) {
             cardButtons = (
                 <>
                     <Button className="w-100 mr-1" onClick={this.onEditClick}>
@@ -75,8 +75,10 @@ class ProductCard extends Component {
     }
 }
 
+const mapStateToProps = ({ auth }) => ({ admin: auth.admin });
+
 export default connect(
-    undefined,
+    mapStateToProps,
     { deleteProductConnect: deleteProduct }
 )(withRouter(ProductCard));
 
@@ -87,5 +89,6 @@ ProductCard.propTypes = {
     imageUrl: PropTypes.string.isRequired,
     _id: PropTypes.string.isRequired,
     history: PropTypes.object.isRequired,
-    deleteProductConnect: PropTypes.func.isRequired
+    deleteProductConnect: PropTypes.func.isRequired,
+    admin: PropTypes.bool.isRequired
 };

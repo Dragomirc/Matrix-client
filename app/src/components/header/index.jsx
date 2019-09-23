@@ -9,6 +9,8 @@ import {
     NavLink
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import styles from "./styles.scss";
 
 class Header extends Component {
@@ -27,6 +29,63 @@ class Header extends Component {
 
     render() {
         const { isOpen } = this.state;
+        const { isAuth, admin } = this.props;
+        let adminView = null;
+        if (admin) {
+            adminView = (
+                <>
+                    <NavItem>
+                        <NavLink
+                            tag={Link}
+                            to="/add-product"
+                            className={styles.navLink}
+                        >
+                            Add Product
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink
+                            tag={Link}
+                            to="/admin-products"
+                            className={styles.navLink}
+                        >
+                            Admin Products
+                        </NavLink>
+                    </NavItem>
+                </>
+            );
+        }
+        let authenticatedView = (
+            <NavItem>
+                <NavLink tag={Link} to="/login" className={styles.navLink}>
+                    Logout
+                </NavLink>
+            </NavItem>
+        );
+        if (!isAuth) {
+            authenticatedView = (
+                <>
+                    <NavItem>
+                        <NavLink
+                            tag={Link}
+                            to="/login"
+                            className={styles.navLink}
+                        >
+                            Login
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink
+                            tag={Link}
+                            to="/signup"
+                            className={styles.navLink}
+                        >
+                            Signup
+                        </NavLink>
+                    </NavItem>
+                </>
+            );
+        }
         return (
             <Navbar color="light" light expand="md">
                 <NavbarBrand to="/" className={styles.navLink}>
@@ -44,42 +103,8 @@ class Header extends Component {
                                 Products
                             </NavLink>
                         </NavItem>
-                        <NavItem>
-                            <NavLink
-                                tag={Link}
-                                to="/add-product"
-                                className={styles.navLink}
-                            >
-                                Add Product
-                            </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink
-                                tag={Link}
-                                to="/admin-products"
-                                className={styles.navLink}
-                            >
-                                Admin Products
-                            </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink
-                                tag={Link}
-                                to="/login"
-                                className={styles.navLink}
-                            >
-                                Login
-                            </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink
-                                tag={Link}
-                                to="/signup"
-                                className={styles.navLink}
-                            >
-                                Signup
-                            </NavLink>
-                        </NavItem>
+                        {adminView}
+                        {authenticatedView}
                     </Nav>
                 </Collapse>
             </Navbar>
@@ -87,4 +112,17 @@ class Header extends Component {
     }
 }
 
-export default Header;
+const mapStateToProps = ({ auth }) => ({
+    isAuth: auth.userId,
+    admin: auth.admin
+});
+export default connect(mapStateToProps)(Header);
+
+Header.propTypes = {
+    isAuth: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+    admin: PropTypes.bool.isRequired
+};
+
+Header.defaultProps = {
+    isAuth: null
+};
