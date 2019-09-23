@@ -24,11 +24,12 @@ export const login = user => dispatch => {
         });
 };
 
-export const logout = () => {
-    return {
+export const logout = () => dispatch => {
+    dispatch({
         type: AUTH.LOGIN_SUCCESS,
-        payload: { userId: null, userName: null }
-    };
+        payload: { userId: null, userName: null, admin: false }
+    });
+    AuthService.logout();
 };
 
 export const checkAuthState = token => dispatch => {

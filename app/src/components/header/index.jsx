@@ -11,6 +11,7 @@ import {
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { logout } from "app/redux/actions/auth";
 import styles from "./styles.scss";
 
 class Header extends Component {
@@ -29,7 +30,7 @@ class Header extends Component {
 
     render() {
         const { isOpen } = this.state;
-        const { isAuth, admin } = this.props;
+        const { isAuth, admin, logoutConnect } = this.props;
         let adminView = null;
         if (admin) {
             adminView = (
@@ -57,7 +58,12 @@ class Header extends Component {
         }
         let authenticatedView = (
             <NavItem>
-                <NavLink tag={Link} to="/login" className={styles.navLink}>
+                <NavLink
+                    tag={Link}
+                    to="/login"
+                    className={styles.navLink}
+                    onClick={logoutConnect}
+                >
                     Logout
                 </NavLink>
             </NavItem>
@@ -116,11 +122,15 @@ const mapStateToProps = ({ auth }) => ({
     isAuth: auth.userId,
     admin: auth.admin
 });
-export default connect(mapStateToProps)(Header);
+export default connect(
+    mapStateToProps,
+    { logoutConnect: logout }
+)(Header);
 
 Header.propTypes = {
     isAuth: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-    admin: PropTypes.bool.isRequired
+    admin: PropTypes.bool.isRequired,
+    logoutConnect: PropTypes.func.isRequired
 };
 
 Header.defaultProps = {

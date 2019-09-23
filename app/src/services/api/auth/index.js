@@ -32,7 +32,7 @@ export default class AuthService {
         return Config.fetch().then(config => {
             const url = `${config.services.auth}/login`;
             const options = {
-                credentials: "same-origin",
+                // credentials: "same-origin",
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(user)
@@ -49,6 +49,27 @@ export default class AuthService {
                         throw new Error(res.message);
                     default:
                         throw new Error("POST Auth Service Error on login");
+                }
+            });
+        });
+    }
+
+    static logout() {
+        return Config.fetch().then(config => {
+            const url = `${config.services.auth}/logout`;
+            const options = {
+                method: "GET"
+            };
+            return fetch(url, options).then(async response => {
+                const statusCode = response.status;
+                const res = await response.json();
+                switch (statusCode) {
+                    case 200:
+                        return res;
+                    case 500:
+                        throw new Error(res.message);
+                    default:
+                        throw new Error("GET Auth Service Error on logout()");
                 }
             });
         });
