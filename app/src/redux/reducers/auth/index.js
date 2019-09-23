@@ -34,6 +34,7 @@ export const authReducer = (state = authInitialState, { type, payload }) => {
                 ...state,
                 loading: false,
                 userId: payload.userId,
+                admin: payload.admin,
                 userName: payload.userName
             };
         default:
