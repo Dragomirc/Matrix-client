@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import classnames from "classnames";
 import { Container, Form, Label, Input, FormGroup, Button } from "reactstrap";
 import { Link } from "react-router-dom";
-import { login } from "app/redux/actions/auth";
+import { login } from "app/redux/actions/user";
 import styles from "./styles.scss";
 
 class LoginPage extends Component {

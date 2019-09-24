@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 import { connect } from "react-redux";
 import { Container, Form, FormGroup, Label, Input, Button } from "reactstrap";
-import { signup } from "app/redux/actions/auth";
+import { signup } from "app/redux/actions/user";
 import styles from "./styles.scss";
 
 class SignupPage extends Component {

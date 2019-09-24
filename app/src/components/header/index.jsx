@@ -11,7 +11,7 @@ import {
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { logout } from "app/redux/actions/auth";
+import { logout } from "app/redux/actions/user";
 import styles from "./styles.scss";
 
 class Header extends Component {
@@ -118,9 +118,9 @@ class Header extends Component {
     }
 }
 
-const mapStateToProps = ({ auth }) => ({
-    isAuth: auth.userId,
-    admin: auth.admin
+const mapStateToProps = ({ user }) => ({
+    isAuth: user.userId,
+    admin: user.admin
 });
 export default connect(
     mapStateToProps,

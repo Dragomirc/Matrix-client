@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Container, Form, Input, Button, Label, FormGroup } from "reactstrap";
 import classnames from "classnames";
 import PropTypes from "prop-types";
-import AuthService from "app/services/api/auth";
+import UserService from "app/services/api/user";
 import styles from "./styles.scss";
 
 class NewPasswordPage extends Component {
@@ -28,7 +28,7 @@ class NewPasswordPage extends Component {
                 },
                 history
             } = this.props;
-            AuthService.setNewPassword({ password, resetToken }).then(() => {
+            UserService.setNewPassword({ password, resetToken }).then(() => {
                 history.push("/login");
             });
         }

@@ -75,7 +75,7 @@ class ProductCard extends Component {
     }
 }
 
-const mapStateToProps = ({ auth }) => ({ admin: auth.admin });
+const mapStateToProps = ({ user }) => ({ admin: user.admin });
 
 export default connect(
     mapStateToProps,

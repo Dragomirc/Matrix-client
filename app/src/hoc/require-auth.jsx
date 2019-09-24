@@ -34,7 +34,7 @@ const requireAuth = ChildComponent => {
     RequireAuth.defaultProps = {
         userId: null
     };
-    const mapStateToProps = ({ auth }) => ({ userId: auth.userId });
+    const mapStateToProps = ({ user }) => ({ userId: user.userId });
     return connect(mapStateToProps)(RequireAuth);
 };
 

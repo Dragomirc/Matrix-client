@@ -1,7 +1,7 @@
 import fetch from "fetch-retry";
 import Config from "app/config/client";
 
-export default class AuthService {
+export default class UserService {
     static signup(user) {
         return Config.fetch().then(config => {
             const url = `${config.services.auth}/signup`;
@@ -22,7 +22,7 @@ export default class AuthService {
                     case 500:
                         throw new Error(res.message);
                     default:
-                        throw new Error("POST Auth Service Error on signup");
+                        throw new Error("POST UserService Error on signup");
                 }
             });
         });
@@ -48,7 +48,7 @@ export default class AuthService {
                     case 500:
                         throw new Error(res.message);
                     default:
-                        throw new Error("POST Auth Service Error on login");
+                        throw new Error("POST UserService Error on login");
                 }
             });
         });
@@ -69,7 +69,7 @@ export default class AuthService {
                     case 500:
                         throw new Error(res.message);
                     default:
-                        throw new Error("GET Auth Service Error on logout()");
+                        throw new Error("GET UserService Error on logout()");
                 }
             });
         });
@@ -96,7 +96,7 @@ export default class AuthService {
                         throw new Error(res.message);
                     default:
                         throw new Error(
-                            "POST Auth Service Error on checkAuthState()"
+                            "POST UserService Error on checkAuthState()"
                         );
                 }
             });
@@ -126,7 +126,7 @@ export default class AuthService {
                         throw new Error(res.message);
                     default:
                         throw new Error(
-                            "POST Auth Service Error on resetPassword(email)"
+                            "POST UserService Error on resetPassword(email)"
                         );
                 }
             });
@@ -155,7 +155,7 @@ export default class AuthService {
                         throw new Error(res.message);
                     default:
                         throw new Error(
-                            "POST Auth Service Error on setNewPassword(body)"
+                            "POST UserService Error on setNewPassword(body)"
                         );
                 }
             });

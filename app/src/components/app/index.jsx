@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { getProducts } from "app/redux/actions/product";
-import { checkAuthState } from "app/redux/actions/auth";
+import { checkAuthState } from "app/redux/actions/user";
 import { renderRoutes } from "react-router-config";
 import Header from "app/components/header";
 

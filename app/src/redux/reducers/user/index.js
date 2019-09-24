@@ -1,22 +1,24 @@
 /* eslint-disable import/prefer-default-export */
-import { AUTH } from "app/redux/constants";
+import { USER } from "app/redux/constants";
 
-const authInitialState = {
+const userInitialState = {
     userId: null,
     userName: null,
+    cart: [],
+    orders: [],
     admin: false,
     error: null,
     loading: false
 };
 
-export const authReducer = (state = authInitialState, { type, payload }) => {
+export const userReducer = (state = userInitialState, { type, payload }) => {
     switch (type) {
-        case AUTH.FETCH_REQUEST:
+        case USER.FETCH_REQUEST:
             return {
                 ...state,
                 loading: true
             };
-        case AUTH.FETCH_FAILED:
+        case USER.FETCH_FAILED:
             return {
                 ...state,
                 userId: null,
@@ -24,15 +26,17 @@ export const authReducer = (state = authInitialState, { type, payload }) => {
                 loading: false,
                 error: payload
             };
-        case AUTH.SIGNUP_SUCCESS:
+        case USER.SIGNUP_SUCCESS:
             return {
                 ...state,
                 loading: false
             };
-        case AUTH.LOGIN_SUCCESS:
+        case USER.LOGIN_SUCCESS:
             return {
                 ...state,
                 loading: false,
+                cart: payload.cart,
+                orders: payload.orders,
                 userId: payload.userId,
                 admin: payload.admin,
                 userName: payload.userName

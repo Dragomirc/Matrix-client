@@ -32,7 +32,7 @@ const isUserAdmin = ChildComponent => {
         isAdmin: PropTypes.bool.isRequired
     };
 
-    const mapStateToProps = ({ auth }) => ({ isAdmin: auth.admin });
+    const mapStateToProps = ({ user }) => ({ isAdmin: user.admin });
     return connect(mapStateToProps)(IsAdmin);
 };
 

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Container, Form, Input, Button, Label, FormGroup } from "reactstrap";
 import classnames from "classnames";
 import PropTypes from "prop-types";
-import AuthService from "app/services/api/auth";
+import UserService from "app/services/api/user";
 import styles from "./styles.scss";
 
 class ResetPasswordPage extends Component {
@@ -21,7 +21,7 @@ class ResetPasswordPage extends Component {
         e.preventDefault();
         const { emailValue } = this.state;
         const { history } = this.props;
-        AuthService.resetPassword(emailValue).then(() => {
+        UserService.resetPassword(emailValue).then(() => {
             history.push("/login");
         });
     };
