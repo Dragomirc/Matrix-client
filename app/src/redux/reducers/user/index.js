@@ -41,6 +41,13 @@ export const userReducer = (state = userInitialState, { type, payload }) => {
                 admin: payload.admin,
                 userName: payload.userName
             };
+        case USER.ADD_TO_CART: {
+            return {
+                ...state,
+                loading: false,
+                cart: [...payload]
+            };
+        }
         default:
             return state;
     }

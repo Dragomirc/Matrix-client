@@ -42,3 +42,17 @@ export const checkAuthState = token => dispatch => {
             dispatch({ type: USER.FETCH_FAIL, payload: err.message });
         });
 };
+
+export const addToCart = productId => dispatch => {
+    dispatch({ type: USER.FETCH_REQUEST });
+    return UserService.addToCart(productId)
+        .then(res => {
+            dispatch({
+                type: USER.ADD_TO_CART,
+                payload: res.cart
+            });
+        })
+        .catch(err => {
+            dispatch({ type: USER.FETCH_FAIL, payload: err.message });
+        });
+};

@@ -11,6 +11,7 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 import { connect } from "react-redux";
 import { deleteProduct } from "app/redux/actions/product";
+import { addToCart } from "app/redux/actions/user";
 import { withRouter } from "react-router-dom";
 import styles from "./styles.scss";
 
@@ -32,6 +33,13 @@ class ProductCard extends Component {
         });
     };
 
+    onAddToCartClick = () => {
+        const { history, _id, addToCartConnect } = this.props;
+        addToCartConnect(_id).then(() => {
+            history.psuh("/cart");
+        });
+    };
+
     render() {
         const { description, title, price, imageUrl, admin } = this.props;
 
@@ -40,7 +48,9 @@ class ProductCard extends Component {
                 <Button className="w-100 mr-1" onClick={this.onDetailsClick}>
                     Details
                 </Button>
-                <Button className="w-100">Add to Cart</Button>
+                <Button className="w-100" onClick={this.onAddToCartClick}>
+                    Add to Cart
+                </Button>
             </>
         );
         if (admin) {
@@ -76,10 +86,13 @@ class ProductCard extends Component {
 }
 
 const mapStateToProps = ({ user }) => ({ admin: user.admin });
-
+const mapDispatchToProps = {
+    deleteProductConnect: deleteProduct,
+    addToCartConnect: addToCart
+};
 export default connect(
     mapStateToProps,
-    { deleteProductConnect: deleteProduct }
+    mapDispatchToProps
 )(withRouter(ProductCard));
 
 ProductCard.propTypes = {
@@ -90,5 +103,6 @@ ProductCard.propTypes = {
     _id: PropTypes.string.isRequired,
     history: PropTypes.object.isRequired,
     deleteProductConnect: PropTypes.func.isRequired,
+    addToCartConnect: PropTypes.func.isRequired,
     admin: PropTypes.bool.isRequired
 };
