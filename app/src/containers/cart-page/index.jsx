@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import { deleteCartItem } from "app/redux/actions/user";
+import OrderDetails from "app/components/order-details";
 import styles from "./styles.scss";
 
 const CartPage = ({ cart, deleteCartItemConnect }) => {
@@ -17,9 +18,9 @@ const CartPage = ({ cart, deleteCartItemConnect }) => {
     if (!isCartEmpty) {
         orderButtonView = (
             <Button
-                className={classnames("mx-auto mt-3 d-block", styles.button)}
+                className={classnames("mx-auto my-3 d-block", styles.button)}
             >
-                Order now!
+                Checkout
             </Button>
         );
     }
@@ -49,7 +50,10 @@ const CartPage = ({ cart, deleteCartItemConnect }) => {
                     </ListGroupItem>
                 ))}
             </ListGroup>
+
             {orderButtonView}
+            <Col className="w-80 mx-auto border-bottom" />
+            <OrderDetails />
         </Container>
     );
 };
