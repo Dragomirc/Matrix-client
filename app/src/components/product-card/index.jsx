@@ -36,13 +36,12 @@ class ProductCard extends Component {
     onAddToCartClick = () => {
         const { history, _id, addToCartConnect } = this.props;
         addToCartConnect(_id).then(() => {
-            history.psuh("/cart");
+            history.push("/cart");
         });
     };
 
     render() {
-        const { description, title, price, imageUrl, admin } = this.props;
-
+        const { description, title, price, imageUrl, location } = this.props;
         let cardButtons = (
             <>
                 <Button className="w-100 mr-1" onClick={this.onDetailsClick}>
@@ -53,7 +52,7 @@ class ProductCard extends Component {
                 </Button>
             </>
         );
-        if (admin) {
+        if (location.pathname === "/admin-products") {
             cardButtons = (
                 <>
                     <Button className="w-100 mr-1" onClick={this.onEditClick}>
@@ -85,13 +84,12 @@ class ProductCard extends Component {
     }
 }
 
-const mapStateToProps = ({ user }) => ({ admin: user.admin });
 const mapDispatchToProps = {
     deleteProductConnect: deleteProduct,
     addToCartConnect: addToCart
 };
 export default connect(
-    mapStateToProps,
+    null,
     mapDispatchToProps
 )(withRouter(ProductCard));
 
@@ -104,5 +102,5 @@ ProductCard.propTypes = {
     history: PropTypes.object.isRequired,
     deleteProductConnect: PropTypes.func.isRequired,
     addToCartConnect: PropTypes.func.isRequired,
-    admin: PropTypes.bool.isRequired
+    location: PropTypes.object.isRequired
 };

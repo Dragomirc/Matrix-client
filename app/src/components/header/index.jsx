@@ -31,6 +31,7 @@ class Header extends Component {
     render() {
         const { isOpen } = this.state;
         const { isAuth, admin, logoutConnect } = this.props;
+
         let adminView = null;
         if (admin) {
             adminView = (
@@ -57,16 +58,28 @@ class Header extends Component {
             );
         }
         let authenticatedView = (
-            <NavItem>
-                <NavLink
-                    tag={Link}
-                    to="/login"
-                    className={styles.navLink}
-                    onClick={logoutConnect}
-                >
-                    Logout
-                </NavLink>
-            </NavItem>
+            <>
+                <NavItem>
+                    <NavLink tag={Link} to="/cart" className={styles.navLink}>
+                        Cart
+                    </NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink tag={Link} to="/cart" className={styles.navLink}>
+                        Orders
+                    </NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink
+                        tag={Link}
+                        to="/login"
+                        className={styles.navLink}
+                        onClick={logoutConnect}
+                    >
+                        Logout
+                    </NavLink>
+                </NavItem>
+            </>
         );
         if (!isAuth) {
             authenticatedView = (

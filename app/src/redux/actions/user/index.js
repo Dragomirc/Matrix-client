@@ -48,7 +48,7 @@ export const addToCart = productId => dispatch => {
     return UserService.addToCart(productId)
         .then(res => {
             dispatch({
-                type: USER.ADD_TO_CART,
+                type: USER.UPDATE_TO_CART,
                 payload: res.cart
             });
         })

@@ -11,6 +11,8 @@ import SignupPage from "app/containers/signup-page";
 import LoginPage from "app/containers/login-page";
 import ResetPasswordPage from "../containers/reset-password-page";
 import NewPasswordPage from "../containers/new-password-page";
+import CartPage from "../containers/cart-page";
+import OrdersPage from "../containers/orders-page";
 
 const routes = [
     {
@@ -58,6 +60,14 @@ const routes = [
             {
                 component: NewPasswordPage,
                 path: "/new-password/:resetToken"
+            },
+            {
+                component: CartPage,
+                path: "/cart"
+            },
+            {
+                component: OrdersPage,
+                path: "/orders"
             }
         ]
     }
