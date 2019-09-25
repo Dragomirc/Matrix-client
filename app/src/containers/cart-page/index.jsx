@@ -1,11 +1,13 @@
+/* eslint-disable react/jsx-curly-newline */
 import React from "react";
 import { Container, Col, Button, ListGroup, ListGroupItem } from "reactstrap";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import classnames from "classnames";
+import { deleteCartItem } from "app/redux/actions/user";
 import styles from "./styles.scss";
 
-const CartPage = ({ cart }) => {
+const CartPage = ({ cart, deleteCartItemConnect }) => {
     const isCartEmpty = cart.length === 0;
     let cartHeadingText = "Your Cart";
     if (isCartEmpty) {
@@ -35,7 +37,14 @@ const CartPage = ({ cart }) => {
                         <Col>{productId.title}</Col>
                         <Col>{`Quantitiy x ${quantity}`}</Col>
                         <Col className="flex-grow-0">
-                            <Button className={styles.button}>Delete</Button>
+                            <Button
+                                className={styles.button}
+                                onClick={() =>
+                                    deleteCartItemConnect(productId._id)
+                                }
+                            >
+                                Delete
+                            </Button>
                         </Col>
                     </ListGroupItem>
                 ))}
@@ -46,8 +55,13 @@ const CartPage = ({ cart }) => {
 };
 
 const mapStateToProps = ({ user }) => ({ cart: user.cart });
-export default connect(mapStateToProps)(CartPage);
+const mapDispatchToProps = { deleteCartItemConnect: deleteCartItem };
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(CartPage);
 
 CartPage.propTypes = {
-    cart: PropTypes.array.isRequired
+    cart: PropTypes.array.isRequired,
+    deleteCartItemConnect: PropTypes.func.isRequired
 };

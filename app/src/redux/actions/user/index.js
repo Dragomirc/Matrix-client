@@ -48,9 +48,20 @@ export const addToCart = productId => dispatch => {
     return UserService.addToCart(productId)
         .then(res => {
             dispatch({
-                type: USER.UPDATE_TO_CART,
+                type: USER.UPDATE_CART,
                 payload: res.cart
             });
+        })
+        .catch(err => {
+            dispatch({ type: USER.FETCH_FAIL, payload: err.message });
+        });
+};
+
+export const deleteCartItem = productId => dispatch => {
+    dispatch({ type: USER.FETCH_REQUEST });
+    return UserService.deleteCartItem(productId)
+        .then(res => {
+            dispatch({ type: USER.UPDATE_CART, payload: res.cart });
         })
         .catch(err => {
             dispatch({ type: USER.FETCH_FAIL, payload: err.message });

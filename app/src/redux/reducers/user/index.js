@@ -41,7 +41,7 @@ export const userReducer = (state = userInitialState, { type, payload }) => {
                 admin: payload.admin,
                 userName: payload.userName
             };
-        case USER.UPDATE_TO_CART: {
+        case USER.UPDATE_CART: {
             return {
                 ...state,
                 loading: false,
