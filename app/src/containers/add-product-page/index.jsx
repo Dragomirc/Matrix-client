@@ -51,7 +51,7 @@ class AddProductPage extends Component {
 }
 
 export default connect(
-    undefined,
+    null,
     { createProductConnect: createProduct }
 )(requireAuth(isUserAdmin(AddProductPage)));
 

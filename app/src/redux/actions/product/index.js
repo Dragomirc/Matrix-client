@@ -1,5 +1,6 @@
 import { SHOP, PRODUCT } from "app/redux/constants";
 import ProductService from "app/services/api/product";
+import ImageUploadService from "app/services/api/image-upload";
 
 export const getProducts = () => dispatch => {
     dispatch({ type: SHOP.FETCH_PRODUCTS_REQUEST });
@@ -16,19 +17,22 @@ export const getProducts = () => dispatch => {
         });
 };
 
-export const createProduct = product => dispatch => {
+export const createProduct = product => async dispatch => {
+    const prod = { ...product };
     dispatch({ type: SHOP.FETCH_PRODUCTS_REQUEST });
-    return ProductService.createProduct(product)
-        .then(res => {
-            dispatch({
-                type: SHOP.CREATE_PRODUCT_SUCCESS,
-                payload: res.product
-            });
-        })
+    try {
+        const { preSignedUrl } = await ImageUploadService.getPresignedUrl();
+        await ImageUploadService.uploadImageToS3(preSignedUrl, prod.image);
+        prod.image = preSignedUrl;
+        const res = await ProductService.createProduct(prod);
 
-        .catch(err => {
-            dispatch({ type: SHOP.FETCH_PRODUCTS_FAIL, payload: err.message });
+        dispatch({
+            type: SHOP.CREATE_PRODUCT_SUCCESS,
+            payload: res.product
         });
+    } catch (err) {
+        dispatch({ type: SHOP.FETCH_PRODUCTS_FAIL, payload: err.message });
+    }
 };
 
 export const updateProduct = product => dispatch => {
