@@ -38,21 +38,30 @@ export const createProduct = product => async dispatch => {
     }
 };
 
-export const updateProduct = product => dispatch => {
+export const updateProduct = product => async dispatch => {
+    const prod = { ...product };
     dispatch({ type: SHOP.FETCH_PRODUCTS_REQUEST });
-    return ProductService.updateProduct(product)
-        .then(res => {
-            dispatch({
-                type: SHOP.UPDATE_PRODUCT_SUCCESS,
-                payload: res.product
-            });
-        })
-        .catch(err => {
-            dispatch({
-                type: SHOP.FETCH_PRODUCTS_FAIL,
-                payload: err.message
-            });
+    try {
+        if (prod.image) {
+            const {
+                preSignedUrl,
+                fileName
+            } = await ImageUploadService.getPresignedUrl();
+            await ImageUploadService.uploadImageToS3(preSignedUrl, prod.image);
+            prod.imageUrl = fileName;
+        }
+        delete prod.image;
+        const res = await ProductService.updateProduct(prod);
+        dispatch({
+            type: SHOP.UPDATE_PRODUCT_SUCCESS,
+            payload: res.product
         });
+    } catch (err) {
+        dispatch({
+            type: SHOP.FETCH_PRODUCTS_FAIL,
+            payload: err.message
+        });
+    }
 };
 export const deleteProduct = productId => dispatch => {
     dispatch({ type: SHOP.FETCH_PRODUCTS_REQUEST });

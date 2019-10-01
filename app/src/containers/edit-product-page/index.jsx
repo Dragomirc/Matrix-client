@@ -40,10 +40,16 @@ class EditProductPage extends Component {
 
     onSubmit = event => {
         event.preventDefault();
-        const { updateProductConnect, product, history } = this.props;
-        updateProductConnect(product).then(() =>
-            history.push("/admin-products")
-        );
+        const {
+            updateProductConnect,
+            updateProductDetailConnect,
+            product,
+            history
+        } = this.props;
+        updateProductConnect(product).then(() => {
+            updateProductDetailConnect("image", undefined);
+            history.push("/admin-products");
+        });
     };
 
     render() {

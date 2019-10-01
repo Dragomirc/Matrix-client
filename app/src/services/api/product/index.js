@@ -34,17 +34,12 @@ export default class ProductService {
     static updateProduct(product) {
         return Config.fetch().then(config => {
             const url = `${config.services.admin}/product`;
-            const { title, description, price, image, imageUrl, _id } = product;
-            const formData = new FormData();
-            formData.append("title", title);
-            formData.append("price", price);
-            formData.append("description", description);
-            formData.append("imageUrl", imageUrl);
-            formData.append("_id", _id);
-            formData.append("image", image);
             const options = {
                 method: "PUT",
-                body: formData
+                body: JSON.stringify(product),
+                headers: {
+                    "Content-Type": "application/json"
+                }
             };
             return fetch(url, options).then(async response => {
                 const statusCode = response.status;
