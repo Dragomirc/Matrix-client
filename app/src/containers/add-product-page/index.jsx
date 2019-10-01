@@ -31,6 +31,7 @@ class AddProductPage extends Component {
     onSubmit = event => {
         event.preventDefault();
         const { createProductConnect, history } = this.props;
+
         createProductConnect(this.state).then(() =>
             history.push("/admin-products")
         );

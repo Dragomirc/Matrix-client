@@ -11,6 +11,7 @@ const AddProduct = props => {
         product: { title, description, price },
         btnText
     } = props;
+
     return (
         <Form
             className={classnames(styles.form, "mx-auto mt-3")}
