@@ -33,7 +33,7 @@ class ProductDetailsPage extends Component {
                     <Row className="justify-content-center">
                         <img
                             className={styles.image}
-                            src={product.imageUrl}
+                            src={`https://matrix-client-bucket.s3.eu-west-2.amazonaws.com/${product.imageUrl}`}
                             alt="product"
                         />
                     </Row>

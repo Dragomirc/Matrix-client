@@ -69,7 +69,7 @@ class ProductCard extends Component {
                 <CardBody>
                     <CardTitle className="text-center">{title}</CardTitle>
                     <CardImg
-                        src={imageUrl}
+                        src={`https://matrix-client-bucket.s3.eu-west-2.amazonaws.com/${imageUrl}`}
                         alt="product picture"
                         className="mb-2"
                     />

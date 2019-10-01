@@ -21,11 +21,14 @@ export const createProduct = product => async dispatch => {
     const prod = { ...product };
     dispatch({ type: SHOP.FETCH_PRODUCTS_REQUEST });
     try {
-        const { preSignedUrl } = await ImageUploadService.getPresignedUrl();
+        const {
+            preSignedUrl,
+            fileName
+        } = await ImageUploadService.getPresignedUrl();
         await ImageUploadService.uploadImageToS3(preSignedUrl, prod.image);
-        prod.image = preSignedUrl;
+        prod.imageUrl = fileName;
+        delete prod.image;
         const res = await ProductService.createProduct(prod);
-
         dispatch({
             type: SHOP.CREATE_PRODUCT_SUCCESS,
             payload: res.product
