@@ -11,6 +11,27 @@ const userInitialState = {
     loading: false
 };
 
+const socketUpdateCart = (cart, { action, product }) => {
+    const newCart = [...cart];
+    if (newCart.length === 0) {
+        return newCart;
+    }
+    const productIndex = newCart.findIndex(item => {
+        return item.productId._id === product._id;
+    });
+    if (productIndex > -1 && action === "update") {
+        newCart[productIndex] = {
+            ...newCart[productIndex],
+            productId: { ...product }
+        };
+    }
+
+    if (productIndex > -1 && action === "delete") {
+        newCart.splice(productIndex, 1);
+    }
+
+    return newCart;
+};
 export const userReducer = (state = userInitialState, { type, payload }) => {
     switch (type) {
         case USER.FETCH_REQUEST:
@@ -46,6 +67,12 @@ export const userReducer = (state = userInitialState, { type, payload }) => {
                 ...state,
                 loading: false,
                 cart: [...payload]
+            };
+        }
+        case USER.SOCKET_UPDATE_CART: {
+            return {
+                ...state,
+                cart: socketUpdateCart(state.cart, payload)
             };
         }
         default:

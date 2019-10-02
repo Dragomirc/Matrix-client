@@ -16,10 +16,10 @@ const updateProduct = (products, updatedProduct) => {
     }
     return updatedProducts;
 };
-const deleteProduct = (products, updatedProduct) => {
+const deleteProduct = (products, deletedProduct) => {
     const updatedProducts = [...products];
     const index = updatedProducts.findIndex(product => {
-        return updatedProduct._id === product._id;
+        return deletedProduct._id === product._id;
     });
     if (index !== -1) {
         updatedProducts.splice(index, 1);

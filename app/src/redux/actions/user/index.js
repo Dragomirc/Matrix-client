@@ -32,9 +32,9 @@ export const logout = () => dispatch => {
     UserService.logout();
 };
 
-export const checkAuthState = token => dispatch => {
+export const getUserDetails = token => dispatch => {
     dispatch({ type: USER.FETCH_REQUEST });
-    return UserService.checkAuthState(token)
+    return UserService.getUserDetails(token)
         .then(res => {
             dispatch({ type: USER.LOGIN_SUCCESS, payload: res });
         })
@@ -66,4 +66,11 @@ export const deleteCartItem = productId => dispatch => {
         .catch(err => {
             dispatch({ type: USER.FETCH_FAIL, payload: err.message });
         });
+};
+
+export const socketUpdateCart = payload => {
+    return {
+        type: USER.SOCKET_UPDATE_CART,
+        payload
+    };
 };

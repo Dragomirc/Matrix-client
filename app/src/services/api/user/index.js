@@ -75,7 +75,7 @@ export default class UserService {
         });
     }
 
-    static checkAuthState(token) {
+    static getUserDetails(token) {
         return Config.fetch().then(config => {
             const url = `${config.services.auth}/user-details`;
             const options = {
@@ -198,7 +198,6 @@ export default class UserService {
             };
             return fetch(url, options).then(async response => {
                 const statusCode = response.status;
-                console.log(response);
                 const res = await response.json();
                 switch (statusCode) {
                     case 200:

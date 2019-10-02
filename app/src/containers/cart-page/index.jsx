@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 import { deleteCartItem } from "app/redux/actions/user";
 import OrderDetails from "app/components/order-details";
+import requireAuth from "app/hoc/require-auth";
 import styles from "./styles.scss";
 
 const CartPage = ({ cart, deleteCartItemConnect }) => {
@@ -63,7 +64,7 @@ const mapDispatchToProps = { deleteCartItemConnect: deleteCartItem };
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(CartPage);
+)(requireAuth(CartPage));
 
 CartPage.propTypes = {
     cart: PropTypes.array.isRequired,

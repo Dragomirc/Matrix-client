@@ -38,6 +38,13 @@ export const createProduct = product => async dispatch => {
     }
 };
 
+export const socketCreateProduct = product => {
+    return {
+        type: SHOP.CREATE_PRODUCT_SUCCESS,
+        payload: product
+    };
+};
+
 export const updateProduct = product => async dispatch => {
     const prod = { ...product };
     dispatch({ type: SHOP.FETCH_PRODUCTS_REQUEST });
@@ -63,6 +70,13 @@ export const updateProduct = product => async dispatch => {
         });
     }
 };
+
+export const socketUpdateProduct = product => {
+    return {
+        type: SHOP.UPDATE_PRODUCT_SUCCESS,
+        payload: product
+    };
+};
 export const deleteProduct = productId => dispatch => {
     dispatch({ type: SHOP.FETCH_PRODUCTS_REQUEST });
     return ProductService.deleteProduct(productId)
@@ -80,6 +94,12 @@ export const deleteProduct = productId => dispatch => {
         });
 };
 
+export const socketDeleteProduct = product => {
+    return {
+        type: SHOP.DELETE_PRODUCT_SUCCESS,
+        payload: product
+    };
+};
 export const getProduct = productId => dispatch => {
     dispatch({ type: PRODUCT.FETCH_PRODUCT_REQUEST });
     return ProductService.getProduct(productId)
