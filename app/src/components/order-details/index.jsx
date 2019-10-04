@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Form, Label, Input, FormGroup, Button } from "reactstrap";
-import classnames from "classnames";
-import styles from "./styles.scss";
+// import classnames from "classnames";
+// import styles from "./styles.scss";
 
 class OrderDetails extends Component {
     constructor(props) {
@@ -24,7 +24,7 @@ class OrderDetails extends Component {
     render() {
         const { contactPerson, deliveryAddress, phoneNumber } = this.state;
         return (
-            <Form className={classnames(styles.form, "mx-auto mt-5")}>
+            <Form className="mx-auto mt-5">
                 <FormGroup>
                     <Label htmlFor="contactPerson">Contanct person</Label>
                     <Input
@@ -33,17 +33,6 @@ class OrderDetails extends Component {
                         type="text"
                         autoComplete="off"
                         value={contactPerson}
-                        onChange={this.onInputChange}
-                    />
-                </FormGroup>
-                <FormGroup>
-                    <Label htmlFor="deliveryAddress">Delivery Address</Label>
-                    <Input
-                        id="deliveryAddress"
-                        name="deliveryAddress"
-                        type="textarea"
-                        autoComplete="off"
-                        value={deliveryAddress}
                         onChange={this.onInputChange}
                     />
                 </FormGroup>
@@ -58,7 +47,20 @@ class OrderDetails extends Component {
                         onChange={this.onInputChange}
                     />
                 </FormGroup>
-                <Button className="w-100">Submit Order</Button>
+                <FormGroup>
+                    <Label htmlFor="deliveryAddress">Delivery Address</Label>
+                    <Input
+                        id="deliveryAddress"
+                        name="deliveryAddress"
+                        type="textarea"
+                        autoComplete="off"
+                        value={deliveryAddress}
+                        onChange={this.onInputChange}
+                    />
+                </FormGroup>
+                <Button className="col-xs-12 col-md-4 mx-md-auto d-block">
+                    Submit Order
+                </Button>
             </Form>
         );
     }
