@@ -212,4 +212,29 @@ export default class UserService {
             });
         });
     }
+
+    static placeOrder(deliveryDetails) {
+        return Config.fetch().then(config => {
+            const url = `${config.services.shop}/order`;
+            const options = {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(deliveryDetails)
+            };
+            return fetch(url, options).then(async response => {
+                const statusCode = response.status;
+                const res = await response.json();
+                switch (statusCode) {
+                    case 200:
+                        return res;
+                    case 404:
+                        throw new Error(res);
+                    case 500:
+                        throw new Error(res.message);
+                    default:
+                        throw new Error("POST UserService placeOrder()");
+                }
+            });
+        });
+    }
 }

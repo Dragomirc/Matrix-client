@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Form, Label, Input, FormGroup, Button } from "reactstrap";
-// import classnames from "classnames";
-// import styles from "./styles.scss";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
+import { placeOrder } from "app/redux/actions/user";
 
 class OrderDetails extends Component {
     constructor(props) {
@@ -19,12 +21,16 @@ class OrderDetails extends Component {
 
     onFormSubmit = event => {
         event.preventDefault();
+        const { placeOrderConnect, history } = this.props;
+        placeOrderConnect(this.state).then(() => {
+            history.push("/orders");
+        });
     };
 
     render() {
         const { contactPerson, deliveryAddress, phoneNumber } = this.state;
         return (
-            <Form className="mx-auto mt-5">
+            <Form className="mx-auto mt-5" onSubmit={this.onFormSubmit}>
                 <FormGroup>
                     <Label htmlFor="contactPerson">Contanct person</Label>
                     <Input
@@ -65,4 +71,13 @@ class OrderDetails extends Component {
         );
     }
 }
-export default OrderDetails;
+const mapDispatchToProps = { placeOrderConnect: placeOrder };
+export default connect(
+    null,
+    mapDispatchToProps
+)(withRouter(OrderDetails));
+
+OrderDetails.propTypes = {
+    placeOrderConnect: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired
+};

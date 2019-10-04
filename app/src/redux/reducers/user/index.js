@@ -69,6 +69,13 @@ export const userReducer = (state = userInitialState, { type, payload }) => {
                 cart: [...payload]
             };
         }
+        case USER.ADD_ORDER: {
+            return {
+                ...state,
+                loading: false,
+                orders: [...state.orders, payload]
+            };
+        }
         case USER.SOCKET_UPDATE_CART: {
             return {
                 ...state,

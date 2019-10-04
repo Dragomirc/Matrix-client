@@ -74,3 +74,17 @@ export const socketUpdateCart = payload => {
         payload
     };
 };
+
+export const placeOrder = deliveryDetails => dispatch => {
+    dispatch({ type: USER.FETCH_REQUEST });
+    return UserService.placeOrder(deliveryDetails).then(res => {
+        dispatch({
+            type: USER.UPDATE_CART,
+            payload: []
+        });
+        dispatch({
+            type: USER.ADD_ORDER,
+            payload: res.order
+        });
+    });
+};
