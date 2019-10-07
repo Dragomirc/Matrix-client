@@ -40,6 +40,7 @@ const AddProduct = props => {
             <FormGroup>
                 <Label htmlFor="description">Description</Label>
                 <Input
+                    autoComplete="off"
                     spellCheck="true"
                     id="description"
                     name="description"
@@ -51,6 +52,7 @@ const AddProduct = props => {
             <FormGroup>
                 <Label htmlFor="price">Price</Label>
                 <Input
+                    autoComplete="off"
                     id="price"
                     name="price"
                     type="number"
