@@ -8,7 +8,7 @@ const OrdersPage = ({ orders }) => {
     const getProductsView = products =>
         products.map(_p => (
             <Row key={_p._id} className="border border-success rounded my-1">
-                <Col>{`${_p.productId.title}(${_p.quantity})`}</Col>
+                <Col>{`${_p.product.title}(${_p.quantity})`}</Col>
             </Row>
         ));
     const ordersItemsView = orders.map(_i => {
