@@ -1,8 +1,8 @@
-/* eslint-disable */
-import React from 'react';
-import { Container, Row, Col, ListGroup, ListGroupItem } from 'reactstrap';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React from "react";
+import { Container, Row, Col, ListGroup, ListGroupItem } from "reactstrap";
+import { connect } from "react-redux";
+import requireAuth from "app/hoc/require-auth";
+import PropTypes from "prop-types";
 
 const OrdersPage = ({ orders }) => {
     const getProductsView = products =>
@@ -37,7 +37,7 @@ const OrdersPage = ({ orders }) => {
 };
 
 const mapStateToProps = ({ user }) => ({ orders: user.orders });
-export default connect(mapStateToProps)(OrdersPage);
+export default connect(mapStateToProps)(requireAuth(OrdersPage));
 
 OrdersPage.propTypes = {
     orders: PropTypes.array.isRequired
