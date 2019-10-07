@@ -31,7 +31,7 @@ class ResetPasswordPage extends Component {
         return (
             <Container>
                 <Form
-                    className={classnames(styles.form, "mt-3 mx-auto")}
+                    className={classnames(styles.form, "mx-auto")}
                     onSubmit={this.onFormSubmit}
                 >
                     <FormGroup>

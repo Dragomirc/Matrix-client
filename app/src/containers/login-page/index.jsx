@@ -34,7 +34,7 @@ class LoginPage extends Component {
             <Container>
                 <Form
                     onSubmit={this.onFormSubmit}
-                    className={classnames(styles.form, "mx-auto mt-3")}
+                    className={classnames(styles.form, "mx-auto")}
                 >
                     <FormGroup>
                         <Label htmlFor="email">Email</Label>

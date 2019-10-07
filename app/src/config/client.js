@@ -2,7 +2,7 @@ class ClientConfig {
     static fetch() {
         let services = {
             proxy: "http://localhost:8080",
-            xForwardedHost: "",
+            xForwardedHost: "localhost:3000",
             shop: "http://localhost:3000/api/shop",
             admin: "http://localhost:3000/api/admin",
             auth: "http://localhost:3000/api/auth",

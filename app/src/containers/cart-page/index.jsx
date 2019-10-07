@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-curly-newline */
-/* eslint-disable */
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
     Container,
     Col,
@@ -8,14 +7,14 @@ import {
     Button,
     ListGroup,
     ListGroupItem
-} from 'reactstrap';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import classnames from 'classnames';
-import { deleteCartItem } from 'app/redux/actions/user';
-import OrderDetails from 'app/components/order-details';
-import requireAuth from 'app/hoc/require-auth';
-import styles from './styles.scss';
+} from "reactstrap";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import classnames from "classnames";
+import { deleteCartItem } from "app/redux/actions/user";
+import OrderDetails from "app/components/order-details";
+import requireAuth from "app/hoc/require-auth";
+import styles from "./styles.scss";
 
 class CartPage extends Component {
     constructor(props) {
@@ -28,6 +27,7 @@ class CartPage extends Component {
     onPlaceOrderBtnClick = () => {
         this.setState({ showOrderDetailsForm: true });
     };
+
     render() {
         const { cart, deleteCartItemConnect } = this.props;
         const { showOrderDetailsForm } = this.state;
@@ -45,7 +45,7 @@ class CartPage extends Component {
                         <Col>{`Quantitiy x ${quantity}`}</Col>
                         <Col xs={12} md={4}>
                             <Button
-                                className={classnames(styles.button, 'w-100')}
+                                className={classnames(styles.button, "w-100")}
                                 onClick={() =>
                                     deleteCartItemConnect(productId._id)
                                 }
@@ -58,15 +58,15 @@ class CartPage extends Component {
             );
         });
 
-        let cartHeadingText = 'Your Cart is Empty!';
+        let cartHeadingText = "Your Cart is Empty!";
         let orderButtonView = null;
         let totalView = null;
         if (!isCartEmpty) {
-            cartHeadingText = 'Your Cart';
+            cartHeadingText = "Your Cart";
             orderButtonView = (
                 <Button
                     className={classnames(
-                        'mx-auto my-3 d-block',
+                        "mx-auto my-3 d-block",
                         styles.button
                     )}
                     onClick={this.onPlaceOrderBtnClick}
@@ -93,7 +93,7 @@ class CartPage extends Component {
             <Container>
                 <Row className="justify-content-center align-items-center flex-column">
                     <Col md={8}>
-                        <ListGroup className="mx-auto mt-3">
+                        <ListGroup className="mx-auto">
                             <ListGroupItem>
                                 <Col className="text-center">
                                     {cartHeadingText}

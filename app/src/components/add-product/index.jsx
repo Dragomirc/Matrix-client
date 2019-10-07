@@ -14,7 +14,7 @@ const AddProduct = props => {
 
     return (
         <Form
-            className={classnames(styles.form, "mx-auto mt-3")}
+            className={classnames(styles.form, "mx-auto")}
             onSubmit={onSubmit}
         >
             <FormGroup>

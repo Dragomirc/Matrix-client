@@ -65,7 +65,7 @@ class Header extends Component {
                     </NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink tag={Link} to="/cart" className={styles.navLink}>
+                    <NavLink tag={Link} to="/orders" className={styles.navLink}>
                         Orders
                     </NavLink>
                 </NavItem>
@@ -106,7 +106,7 @@ class Header extends Component {
             );
         }
         return (
-            <Navbar color="light" light expand="md">
+            <Navbar color="light" light expand="md" className="mb-3">
                 <NavbarBrand to="/" className={styles.navLink}>
                     Logo
                 </NavbarBrand>
