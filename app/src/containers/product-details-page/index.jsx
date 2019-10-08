@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getProduct } from "app/redux/actions/product";
 import { Container, Spinner, Row, Button } from "reactstrap";
+import { getProduct } from "app/redux/actions/product";
+import { addToCart } from "app/redux/actions/user";
 import styles from "./styles.scss";
 
 class ProductDetailsPage extends Component {
@@ -19,6 +20,14 @@ class ProductDetailsPage extends Component {
             getProductConnect(currentProductId);
         }
     }
+
+    onAddToCartClick = () => {
+        const { history, match, addToCartConnect } = this.props;
+        const { productId } = match.params;
+        addToCartConnect(productId).then(() => {
+            history.push("/cart");
+        });
+    };
 
     render() {
         const { product, loading } = this.props;
@@ -44,7 +53,9 @@ class ProductDetailsPage extends Component {
                         {product.description}
                     </Row>
                     <Row className="justify-content-center">
-                        <Button>Add to Cart</Button>
+                        <Button onClick={this.onAddToCartClick}>
+                            Add to Cart
+                        </Button>
                     </Row>
                 </>
             );
@@ -57,17 +68,23 @@ const mapStateToProps = ({ product }) => ({
     product: product.details,
     loading: product.loading
 });
+const mapDispatchToProps = {
+    addToCartConnect: addToCart,
+    getProductConnect: getProduct
+};
 
 export default connect(
     mapStateToProps,
-    { getProductConnect: getProduct }
+    mapDispatchToProps
 )(ProductDetailsPage);
 
 ProductDetailsPage.propTypes = {
     loading: PropTypes.bool.isRequired,
     product: PropTypes.object,
     match: PropTypes.object.isRequired,
-    getProductConnect: PropTypes.func.isRequired
+    getProductConnect: PropTypes.func.isRequired,
+    addToCartConnect: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired
 };
 
 ProductDetailsPage.defaultProps = {
