@@ -6,7 +6,11 @@ import {
     NavbarBrand,
     Nav,
     NavItem,
-    NavLink
+    NavLink,
+    UncontrolledDropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
@@ -113,15 +117,22 @@ class Header extends Component {
                 <NavbarToggler onClick={this.toggle} />
                 <Collapse isOpen={isOpen} navbar>
                     <Nav navbar className="ml-auto">
-                        <NavItem>
-                            <NavLink
-                                tag={Link}
-                                to="/products"
-                                className={styles.navLink}
-                            >
+                        <UncontrolledDropdown nav inNavbar>
+                            <DropdownToggle nav caret>
                                 Products
-                            </NavLink>
-                        </NavItem>
+                            </DropdownToggle>
+                            <DropdownMenu>
+                                <DropdownItem tag={Link} to="/products">
+                                    Option 1
+                                </DropdownItem>
+                                <DropdownItem tag={Link} to="/products">
+                                    Option 2
+                                </DropdownItem>
+                                <DropdownItem tag={Link} to="/products">
+                                    Option 3
+                                </DropdownItem>
+                            </DropdownMenu>
+                        </UncontrolledDropdown>
                         {adminView}
                         {authenticatedView}
                     </Nav>
