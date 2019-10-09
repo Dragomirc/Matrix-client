@@ -16,7 +16,8 @@ class AddProductPage extends Component {
             title: "",
             description: "",
             price: "",
-            image: ""
+            image: "",
+            category: "1"
         };
     }
 

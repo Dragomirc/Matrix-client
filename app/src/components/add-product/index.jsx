@@ -8,7 +8,7 @@ const AddProduct = props => {
     const {
         onSubmit,
         onInputChange,
-        product: { title, description, price },
+        product: { title, description, price, category },
         btnText
     } = props;
 
@@ -35,6 +35,7 @@ const AddProduct = props => {
                     id="image"
                     type="file"
                     onChange={onInputChange}
+                    multiple
                 />
             </FormGroup>
             <FormGroup>
@@ -61,7 +62,49 @@ const AddProduct = props => {
                     onChange={onInputChange}
                 />
             </FormGroup>
-            <Button className="w-100">{btnText}</Button>
+            <FormGroup tag="fieldset">
+                <div className="mb-1">Choose category</div>
+                <FormGroup check>
+                    <Label htmlFor="category1" check>
+                        <Input
+                            type="radio"
+                            id="category1"
+                            name="category"
+                            value="1"
+                            checked={category === "1"}
+                            onChange={onInputChange}
+                        />
+                        Category 1
+                    </Label>
+                </FormGroup>
+                <FormGroup check>
+                    <Label htmlFor="category2" check>
+                        <Input
+                            type="radio"
+                            id="category2"
+                            name="category"
+                            value="2"
+                            checked={category === "2"}
+                            onChange={onInputChange}
+                        />
+                        Category 2
+                    </Label>
+                </FormGroup>
+                <FormGroup check>
+                    <Label htmlFor="category3" check>
+                        <Input
+                            type="radio"
+                            id="category3"
+                            name="category"
+                            value="3"
+                            checked={category === "3"}
+                            onChange={onInputChange}
+                        />
+                        Category 3
+                    </Label>
+                </FormGroup>
+            </FormGroup>
+            <Button className="w-100 mt-3">{btnText}</Button>
         </Form>
     );
 };
