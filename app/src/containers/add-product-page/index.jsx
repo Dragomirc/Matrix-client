@@ -23,7 +23,7 @@ class AddProductPage extends Component {
 
     onInputChange = ({ target: { value, name, files } }) => {
         if (files) {
-            this.setState({ [name]: files[0] });
+            this.setState({ [name]: files });
         } else {
             this.setState({ [name]: value });
         }

@@ -17,16 +17,24 @@ export const getProducts = () => dispatch => {
         });
 };
 
+const getImageFileNames = async fileList => {
+    const preSignedUrlPromises = [];
+    for (let i = 0; i < fileList.length; i++) {
+        preSignedUrlPromises.push(ImageUploadService.getPresignedUrl());
+    }
+    const s3ResObjs = await Promise.all(preSignedUrlPromises);
+    const fileNamesArr = s3ResObjs.map((item, index) => {
+        ImageUploadService.uploadImageToS3(item.preSignedUrl, fileList[index]);
+        return item.fileName;
+    });
+    return fileNamesArr;
+};
 export const createProduct = product => async dispatch => {
     const prod = { ...product };
     dispatch({ type: SHOP.FETCH_PRODUCTS_REQUEST });
     try {
-        const {
-            preSignedUrl,
-            fileName
-        } = await ImageUploadService.getPresignedUrl();
-        await ImageUploadService.uploadImageToS3(preSignedUrl, prod.image);
-        prod.imageUrl = fileName;
+        const fileNamesArr = await getImageFileNames(product.image);
+        prod.imageUrls = fileNamesArr;
         delete prod.image;
         const res = await ProductService.createProduct(prod);
         dispatch({
@@ -50,14 +58,10 @@ export const updateProduct = product => async dispatch => {
     dispatch({ type: SHOP.FETCH_PRODUCTS_REQUEST });
     try {
         if (prod.image) {
-            const {
-                preSignedUrl,
-                fileName
-            } = await ImageUploadService.getPresignedUrl();
-            await ImageUploadService.uploadImageToS3(preSignedUrl, prod.image);
-            prod.imageUrl = fileName;
+            const fileNamesArr = await getImageFileNames(product.image);
+            prod.imageUrls = fileNamesArr;
+            delete prod.image;
         }
-        delete prod.image;
         const res = await ProductService.updateProduct(prod);
         dispatch({
             type: SHOP.UPDATE_PRODUCT_SUCCESS,
