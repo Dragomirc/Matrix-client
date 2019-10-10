@@ -31,14 +31,14 @@ class ProductDetailsPage extends Component {
 
     render() {
         const { product, loading } = this.props;
-        const images = product.imageUrls.map(url => ({
-            original: `https://matrix-client-bucket.s3.eu-west-2.amazonaws.com/${url}`,
-            thumbnail: `https://matrix-client-bucket.s3.eu-west-2.amazonaws.com/${url}`
-        }));
 
         let productDetailsView = <Spinner />;
-
-        if (!loading && product) {
+        const doesProductExist = Object.keys(product).length > 0;
+        if (!loading && doesProductExist) {
+            const images = product.imageUrls.map(url => ({
+                original: `https://matrix-client-bucket.s3.eu-west-2.amazonaws.com/${url}`,
+                thumbnail: `https://matrix-client-bucket.s3.eu-west-2.amazonaws.com/${url}`
+            }));
             productDetailsView = (
                 <>
                     <Row className="justify-content-center">
@@ -54,7 +54,7 @@ class ProductDetailsPage extends Component {
                         </Col>
                     </Row>
                     <Row className="justify-content-center">
-                        {`${product.price} $`}
+                        {`${product.price} MDL`}
                     </Row>
                     <Row className="justify-content-center">
                         {product.description}

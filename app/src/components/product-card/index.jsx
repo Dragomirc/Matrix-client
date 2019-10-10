@@ -74,7 +74,7 @@ class ProductCard extends Component {
                         className="mb-2"
                     />
                     <CardText className="text-center">{description}</CardText>
-                    <CardText className="text-center">{`${price} $`}</CardText>
+                    <CardText className="text-center">{`${price} MDL`}</CardText>
                     <div className="d-flex justify-content-between">
                         {cardButtons}
                     </div>

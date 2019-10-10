@@ -2,9 +2,9 @@ import fetch from "fetch-retry";
 import Config from "app/config/client";
 
 export default class ImageUploadService {
-    static getPresignedUrl() {
+    static getPresignedUrl(fileName) {
         return Config.fetch().then(config => {
-            const url = `${config.services.imageUpload}/presigned-url`;
+            const url = `${config.services.imageUpload}/presigned-url?filename=${fileName}`;
             const options = {
                 method: "GET"
             };

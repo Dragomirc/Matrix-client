@@ -20,7 +20,8 @@ export const getProducts = () => dispatch => {
 const getImageFileNames = async fileList => {
     const preSignedUrlPromises = [];
     for (let i = 0; i < fileList.length; i++) {
-        preSignedUrlPromises.push(ImageUploadService.getPresignedUrl());
+        const fileName = fileList[i].name;
+        preSignedUrlPromises.push(ImageUploadService.getPresignedUrl(fileName));
     }
     const s3ResObjs = await Promise.all(preSignedUrlPromises);
     const fileNamesArr = s3ResObjs.map((item, index) => {
@@ -57,11 +58,6 @@ export const updateProduct = product => async dispatch => {
     const prod = { ...product };
     dispatch({ type: SHOP.FETCH_PRODUCTS_REQUEST });
     try {
-        if (prod.image) {
-            const fileNamesArr = await getImageFileNames(product.image);
-            prod.imageUrls = fileNamesArr;
-            delete prod.image;
-        }
         const res = await ProductService.updateProduct(prod);
         dispatch({
             type: SHOP.UPDATE_PRODUCT_SUCCESS,
@@ -118,9 +114,23 @@ export const getProduct = productId => dispatch => {
         });
 };
 
-export const updateProductDetail = (property, value) => {
-    return {
-        type: PRODUCT.UPDATE_PRODUCT_DETAIL,
-        payload: { property, value }
-    };
+export const updateProductDetail = (property, value) => async dispatch => {
+    try {
+        let newProperty = property;
+        let newValue = value;
+        if (property === "image") {
+            const fileNamesArr = await getImageFileNames(value);
+            newProperty = "imageUrls";
+            newValue = fileNamesArr;
+        }
+        dispatch({
+            type: PRODUCT.UPDATE_PRODUCT_DETAIL,
+            payload: { property: newProperty, value: newValue }
+        });
+    } catch (err) {
+        dispatch({
+            type: SHOP.FETCH_PRODUCTS_FAIL,
+            payload: err.message
+        });
+    }
 };
