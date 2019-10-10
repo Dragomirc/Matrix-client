@@ -1,10 +1,10 @@
 import React, { Component } from "react";
+import ImageGallery from "react-image-gallery";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Container, Spinner, Row, Button } from "reactstrap";
+import { Container, Spinner, Row, Button, Col } from "reactstrap";
 import { getProduct } from "app/redux/actions/product";
 import { addToCart } from "app/redux/actions/user";
-import styles from "./styles.scss";
 
 class ProductDetailsPage extends Component {
     static fetchData({ store, query }) {
@@ -31,6 +31,11 @@ class ProductDetailsPage extends Component {
 
     render() {
         const { product, loading } = this.props;
+        const images = product.imageUrls.map(url => ({
+            original: `https://matrix-client-bucket.s3.eu-west-2.amazonaws.com/${url}`,
+            thumbnail: `https://matrix-client-bucket.s3.eu-west-2.amazonaws.com/${url}`
+        }));
+
         let productDetailsView = <Spinner />;
 
         if (!loading && product) {
@@ -40,11 +45,13 @@ class ProductDetailsPage extends Component {
                         <h2>{product.title}</h2>
                     </Row>
                     <Row className="justify-content-center">
-                        <img
-                            className={styles.image}
-                            src={`https://matrix-client-bucket.s3.eu-west-2.amazonaws.com/${product.imageUrl}`}
-                            alt="product"
-                        />
+                        <Col lg={8}>
+                            <ImageGallery
+                                items={images}
+                                showPlayButton={false}
+                                showFullscreenButton={false}
+                            />
+                        </Col>
                     </Row>
                     <Row className="justify-content-center">
                         {`${product.price} $`}
