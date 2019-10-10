@@ -32,7 +32,7 @@ class EditProductPage extends Component {
     onInputChange = ({ target: { value, name, files } }) => {
         const { updateProductDetailConnect } = this.props;
         if (files) {
-            updateProductDetailConnect(name, files[0]);
+            updateProductDetailConnect(name, files);
         } else {
             updateProductDetailConnect(name, value);
         }
