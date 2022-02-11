@@ -30,7 +30,7 @@
         "cookie-parser": "^1.4.4",
         "del-cli": "^2.0.0",
         "express": "^4.17.1",
-        "express-handlebars": "^3.1.0",
+        "express-handlebars": "^5.3.1",
         "express-http-proxy": "^1.5.1",
         "fetch-retry": "^2.2.2",
         "glob": "^7.1.4",
